@@ -20,10 +20,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/school"
+                android:src="@drawable/school" />
 
 
-                />
 
             <ImageView
                 android:layout_width="100dp"
