@@ -14,11 +14,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 public class MainActivity extends AppCompatActivity {
     private int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE","android.permission.INTERNET"};
-    LinearLayout layout1;
+
+
+    ViewFlipper layout_flipper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,15 +34,14 @@ public class MainActivity extends AppCompatActivity {
         init();
         logic();
 
-        Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
-
-        new Handler().postDelayed(() -> layout1.setAnimation(slide_up),2000);
 
     }
     private void init()
     {
-        layout1 = findViewById(R.id.layout1);
 
+        layout_flipper = findViewById(R.id.layout_flipper);
+
+        layout_flipper.setFlipInterval(1000);
     }
 
     private boolean allPermissionsGranted(){
@@ -75,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void logic()
     {
+
+        new Handler().postDelayed(() -> layout_flipper.showNext(),2000);
 
     }
 
