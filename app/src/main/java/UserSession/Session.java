@@ -26,6 +26,14 @@ public class Session {
     String NIK = "NIK";
     String Status = "Status";
 
+    String whoami = "whoami";
+
+    public void setWhoami( String who )
+    {
+        this.editor.putString(this.whoami, who);
+        editor.commit();
+    }
+
     public void setLogin( Boolean status )
     {
         editor.putBoolean(Status, status );
@@ -59,6 +67,11 @@ public class Session {
     public Boolean isLogin()
     {
         return sharedPreferences.getBoolean(this.Status, false );
+    }
+
+    public String getWhoami()
+    {
+        return sharedPreferences.getString(this.whoami, "");
     }
 
 
