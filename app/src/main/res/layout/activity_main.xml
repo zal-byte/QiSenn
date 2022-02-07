@@ -6,40 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/welcome"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ViewFlipper
-                android:id="@+id/layout_flipper"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/school" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/lay1"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/loading" />
 
 
 
-                    <ImageView
-                        android:layout_width="125dp"
-                        android:layout_height="125dp"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="50dp"
-                        android:src="@drawable/logo" />
-                </RelativeLayout>
-            </ViewFlipper>
-
-        </RelativeLayout>
-    </FrameLayout>
+    <LinearLayout
+        android:id="@+id/lay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="135dp"
+            android:layout_height="135dp"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/logo" />
+    </LinearLayout>
 
 </RelativeLayout>

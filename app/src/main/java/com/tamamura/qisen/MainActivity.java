@@ -6,9 +6,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -20,8 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE","android.permission.INTERNET"};
 
-
-    ViewFlipper layout_flipper;
+    LinearLayout lay1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private void init()
     {
 
-        layout_flipper = findViewById(R.id.layout_flipper);
+        lay1 = findViewById(R.id.lay1);
 
-        layout_flipper.setFlipInterval(1000);
     }
 
     private boolean allPermissionsGranted(){
@@ -78,7 +78,13 @@ public class MainActivity extends AppCompatActivity {
     public void logic()
     {
 
-        new Handler().postDelayed(() -> layout_flipper.showNext(),2000);
+        Animation slide_up = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+
+        new Handler().postDelayed(() -> {
+            lay1.setVisibility(View.VISIBLE);
+            lay1.setAnimation(slide_up);
+        }, 3000);
+
 
     }
 
