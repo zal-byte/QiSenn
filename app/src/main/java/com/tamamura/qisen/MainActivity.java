@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -29,9 +30,10 @@ public class MainActivity extends AppCompatActivity {
     private int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE","android.permission.INTERNET"};
 
-    RelativeLayout lay1;
+    LinearLayout lay1;
 
     Session session;
+    MaterialButton btn_siswa, btn_guru;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,14 +45,19 @@ public class MainActivity extends AppCompatActivity {
 
 
         init();
-        logic();
-
+        try {
+            logic();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
     private void init()
     {
 
         lay1 = findViewById(R.id.lay1);
+        btn_siswa = findViewById(R.id.btn_siswa);
+        btn_guru = findViewById(R.id.btn_guru);
 
     }
 
@@ -77,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             if (allPermissionsGranted()) {
-                logic();
+
             } else {
                 Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show();
                 this.finish();
@@ -85,30 +92,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void slideDown(){
-
-        View view = findViewById(R.id.lay1);
-        TranslateAnimation animate = new TranslateAnimation(
-                0,                 // fromXDelta
-                0,                 // toXDelta
-                0,                 // fromYDelta
-                view.getHeight()); // toYDelta
-        animate.setDuration(500);
-        animate.setFillAfter(true);
-        view.startAnimation(animate);
 
 
-    }
-
-
-    public void logic()
-    {
+    public void logic() throws InterruptedException {
 
 
 
-        new Handler().postDelayed(() -> {
-            slideDown();
+        Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                lay1.setVisibility(View.VISIBLE);
+                lay1.startAnimation(animation);
+
+            }
         },900);
+
+        btn_siswa.setOnClickListener( View -> {
+            MainActivity.this.finish();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            session.setWhoami("siswa");
+        });
+        btn_guru.setOnClickListener( View->{
+            MainActivity.this.finish();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            session.setWhoami("guru");
+        });
+
+
 
 
     }

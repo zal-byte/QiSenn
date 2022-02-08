@@ -18,11 +18,9 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".DashboardActivity"></activity>
         <activity
-            android:name=".LoginActivity"
-            android:theme="@style/Theme.WithoutActionBar" />
+            android:name=".LoginActivity" android:theme="@style/Theme.WithoutActionBar" />
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/Theme.WithoutActionBar">
+            android:name=".MainActivity" android:theme="@style/Theme.WithoutActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
