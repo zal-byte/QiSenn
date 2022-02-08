@@ -6,29 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/welcome"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/lay1"
-        android:scaleType="centerCrop"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/loading" />
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/welcome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/loading" />
 
 
+            <RelativeLayout
+                android:id="@+id/lay1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:visibility="gone">
 
-    <LinearLayout
-        android:id="@+id/lay1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"
-        android:orientation="vertical">
-        <ImageView
-            android:layout_width="135dp"
-            android:layout_height="135dp"
-            android:layout_marginTop="80dp"
-            android:src="@drawable/logo" />
-    </LinearLayout>
+                <Button
+                    android:id="@+id/test"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/cardview_dark_background"
+                    android:text="Test" />
+
+                <Button
+                    android:id="@+id/tost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/test"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@color/cardview_dark_background"
+                    android:text="Test" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
 
 </RelativeLayout>

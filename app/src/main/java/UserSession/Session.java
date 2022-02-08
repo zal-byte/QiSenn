@@ -54,6 +54,8 @@ public class Session {
         editor.putBoolean(this.Status, false);
         editor.putString(this.NIS,"");
         editor.putString(this.NIK,"");
+        editor.putString(this.whoami, "");
+        editor.commit();
     }
 
     public String getNIS()

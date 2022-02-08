@@ -14,22 +14,30 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import UserSession.Session;
 
 public class MainActivity extends AppCompatActivity {
     private int REQUEST_CODE_PERMISSIONS = 1001;
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE","android.permission.INTERNET"};
 
-    LinearLayout lay1;
+    RelativeLayout lay1;
+    Button test, tost;
+
+    Session session;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkPermission(REQUEST_CODE_PERMISSIONS);
 
-        getWindow().setLayout(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        session = new Session(this);
+
 
 
         init();
@@ -41,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     {
 
         lay1 = findViewById(R.id.lay1);
+        test = findViewById(R.id.test);
+        tost = findViewById(R.id.tost);
 
     }
 
@@ -78,12 +88,14 @@ public class MainActivity extends AppCompatActivity {
     public void logic()
     {
 
-        Animation slide_up = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+
 
         new Handler().postDelayed(() -> {
+            Animation slide_up = AnimationUtils.loadAnimation(MainActivity.this.getApplicationContext(), R.anim.slide_up);
+
             lay1.setVisibility(View.VISIBLE);
-            lay1.setAnimation(slide_up);
-        }, 3000);
+            lay1.startAnimation(slide_up);
+        },900);
 
 
     }
