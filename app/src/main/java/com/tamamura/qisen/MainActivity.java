@@ -14,11 +14,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.google.android.material.button.MaterialButton;
 
 import UserSession.Session;
 
@@ -27,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private final String[] REQUIRED_PERMISSIONS = new String[]{"android.permission.CAMERA", "android.permission.WRITE_EXTERNAL_STORAGE","android.permission.INTERNET"};
 
     RelativeLayout lay1;
-    Button test, tost;
 
     Session session;
     @Override
@@ -49,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     {
 
         lay1 = findViewById(R.id.lay1);
-        test = findViewById(R.id.test);
-        tost = findViewById(R.id.tost);
 
     }
 
@@ -85,16 +85,29 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void slideDown(){
+
+        View view = findViewById(R.id.lay1);
+        TranslateAnimation animate = new TranslateAnimation(
+                0,                 // fromXDelta
+                0,                 // toXDelta
+                0,                 // fromYDelta
+                view.getHeight()); // toYDelta
+        animate.setDuration(500);
+        animate.setFillAfter(true);
+        view.startAnimation(animate);
+
+
+    }
+
+
     public void logic()
     {
 
 
 
         new Handler().postDelayed(() -> {
-            Animation slide_up = AnimationUtils.loadAnimation(MainActivity.this.getApplicationContext(), R.anim.slide_up);
-
-            lay1.setVisibility(View.VISIBLE);
-            lay1.startAnimation(slide_up);
+            slideDown();
         },900);
 
 
