@@ -31,14 +31,6 @@ public class UserAction extends UserClient{
     }
 
 
-    public String imgToBase64( Bitmap bitmap)
-    {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
-        byte[] res = baos.toByteArray();
-
-        return String.valueOf(Base64.encodeToString(res, Base64.DEFAULT));
-    }
 
 
 }
