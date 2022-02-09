@@ -27,7 +27,7 @@ public class UserAction extends UserClient{
 
     //end-login
     public String userProfile(String dest) throws Exception {
-        return get(api + "?request=userProfile");
+        return get(api + "?request=userProfile" + dest );
     }
 
 
