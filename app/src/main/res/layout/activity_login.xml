@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/btn_back"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5mm"
+        android:layout_marginTop="55dp"
         android:text="Silahkan masuk untuk melanjutkan"
         android:textSize="10pt"
         android:textStyle="bold" />
@@ -51,9 +51,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/txt_preview_2"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:hint="ID">
+        android:hint="@string/str_id"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/identifier"
@@ -71,7 +73,9 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:hint="Kata Sandi">
+        android:hint="@string/str_kata_sandi"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
@@ -87,7 +91,8 @@
         android:layout_below="@id/text_input_layout_2"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
+        app:cornerRadius="10dp"
         android:layout_marginRight="20dp"
-        android:text="Masuk" />
+        android:text="@string/str_masuk" />
 
 </RelativeLayout>

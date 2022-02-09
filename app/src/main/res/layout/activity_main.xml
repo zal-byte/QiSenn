@@ -46,7 +46,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Selamat Datang di QiSen!"
+                        android:text="@string/landing_welcome"
                         android:fontFamily="@font/google_sans"
                         android:textSize="10pt"
                         android:layout_above="@id/btn_siswa"

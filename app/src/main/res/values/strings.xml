@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">QiSen</string>
+    <string name="str_masuk">Masuk</string>
+    <string name="str_kata_sandi">Kata Sandi</string>
+    <string name="str_id">ID</string>
+    <string name="landing_welcome">Selamat Datang di QiSen!</string>
 </resources>
