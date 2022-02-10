@@ -16,7 +16,10 @@
             android:layout_height="?actionBarSize"/>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/dash_lay" />
+    <include layout="@layout/dash_lay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/dashboard_floating_action_button"

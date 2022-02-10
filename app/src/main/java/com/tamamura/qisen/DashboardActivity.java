@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -68,12 +69,13 @@ public class DashboardActivity extends AppCompatActivity {
 
     private void logic() {
 
-        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        setSupportActionBar(dashboard_toolbar);
+
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_toolbar_layout);
 
 
         //user name
-
 
         //end of user name
 
@@ -91,7 +93,7 @@ public class DashboardActivity extends AppCompatActivity {
     private void userInformation(String result) throws JSONException {
 
         if (result.isEmpty()) {
-            handler.showToast("no_data");
+            Toast.makeText(this, "no_data", Toast.LENGTH_SHORT).show();
         } else {
             JSONObject object = new JSONObject(result);
             String name = session.getWhoami().equals("siswa") ? "siswa" : (session.getWhoami().equals("guru") ? "guru" : null);
@@ -123,7 +125,7 @@ public class DashboardActivity extends AppCompatActivity {
                             guru.setFoto(obj.getString("foto"));
                         }
                     } else {
-                        handler.showToast(obj.getString("msg"));
+                        Toast.makeText(this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
                     }
 
                 }

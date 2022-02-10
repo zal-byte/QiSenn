@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
         classInit();
         viewInit();
         logic();
-
     }
 
     private void classInit() {
@@ -67,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
         if( result.isEmpty() )
         {
-            handler.showToast("no_data");
+            Toast.makeText(this, "no_data", Toast.LENGTH_SHORT).show();
         }else
         {
             JSONObject jsonObject = new JSONObject(result);
@@ -79,8 +78,9 @@ public class LoginActivity extends AppCompatActivity {
                 for(int i = 0 ; i < jsonArray.length(); i++)
                 {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    if(object.getBoolean("res"))
+                    if(object.getBoolean("res") == true)
                     {
+                        Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
                         //true
                         session.setLogin(true);
                         if(session.getWhoami().equals("siswa") )
@@ -93,6 +93,10 @@ public class LoginActivity extends AppCompatActivity {
 
                         LoginActivity.this.finish();
                         startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+
+                    }else{
+                        System.out.println("Login[error]");
+                        Toast.makeText(this, object.getString("msg"), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -116,10 +120,12 @@ public class LoginActivity extends AppCompatActivity {
 
             if (iden.isEmpty()) {
                 String msg = session.getWhoami().equals("siswa") ? "Masukan NIS kamu dengan benar" : (session.getWhoami().equals("guru") ? "Masukan NIK kamu dengan benar" : null);
-                handler.showToast(msg);
+                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
             } else {
                 if (passw.isEmpty()) {
-                    handler.showToast("Isi kata sandi dengan benar");
+
+                    Toast.makeText(this, "Isi kata sandi dengan benar", Toast.LENGTH_SHORT).show();
+
                 } else {
 
                     HashMap<String, String> param = new HashMap<>();

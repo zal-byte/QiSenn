@@ -96,12 +96,19 @@ public class MainActivity extends AppCompatActivity {
 
     public void logic() throws InterruptedException {
 
+        if( session.isLogin() == true )
+        {
+            MainActivity.this.finish();
+            startActivity(new Intent(MainActivity.this, DashboardActivity.class));
+        }
+
 
 
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.slide_up);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+
 
                 lay1.setVisibility(View.VISIBLE);
                 lay1.startAnimation(animation);

@@ -18,7 +18,7 @@ public class UserClient {
     public String userDefaultImage = "img/user/default.jpg";
 
 
-    public String api = "http://localhost/qisen/api.php";
+    public String api = "https://blyatblyatqisen.nasihosting.com/QiSen/api.php";
 
     public UserClient()
     {

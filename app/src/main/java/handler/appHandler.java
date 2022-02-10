@@ -30,17 +30,7 @@ public class appHandler {
         this.session = new Session(this.activity);
     }
 
-    public void showToast(String message) {
-        Toast toast = new Toast(this.activity);
 
-        View view = LayoutInflater.from(this.activity).inflate(R.layout.custom_toast, null);
-        toastMessage = view.findViewById(R.id.toastMessage);
-        toastMessage.setText(message);
-
-
-        toast.setView(view);
-        toast.show();
-    }
 
     public String imgToBase64(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
