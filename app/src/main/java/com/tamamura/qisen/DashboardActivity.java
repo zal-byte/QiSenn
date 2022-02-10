@@ -3,12 +3,17 @@ package com.tamamura.qisen;
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -27,13 +32,14 @@ import Client.UserAction;
 import UserSession.Session;
 import handler.appHandler;
 
-public class DashboardActivity extends AppCompatActivity {
+public class DashboardActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     Session session;
 
     DrawerLayout dashboard_drawer;
     NavigationView dashboard_navigation_view;
+    ActionBarDrawerToggle drawerToggle;
 
     Toolbar dashboard_toolbar;
 
@@ -45,6 +51,8 @@ public class DashboardActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         classInit();
         viewInit();
@@ -65,19 +73,38 @@ public class DashboardActivity extends AppCompatActivity {
         dashboard_navigation_view = findViewById(R.id.nav_view);
         dashboard_toolbar = findViewById(R.id.dashboard_toolbar);
 
-    }
-
-    private void logic() {
 
         setSupportActionBar(dashboard_toolbar);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_toolbar_layout);
 
+        drawerToggle = new ActionBarDrawerToggle(this, dashboard_drawer, R.string.nav_open, R.string.nav_close);
+
+        dashboard_drawer.addDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressLint("RestrictedApi")
+    private void logic() {
+
 
         //user name
 
         //end of user name
+
+        dashboard_navigation_view.setNavigationItemSelectedListener(this);
 
     }
 
@@ -167,5 +194,31 @@ public class DashboardActivity extends AppCompatActivity {
                 return res;
             }
         }.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        if (dashboard_drawer.isDrawerOpen(GravityCompat.START)) {
+            dashboard_drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.user:
+                Toast.makeText(this, "Selected `user`", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.logout:
+                handler.userLogout();
+                break;
+            default:
+                break;
+        }
+        return true;
     }
 }

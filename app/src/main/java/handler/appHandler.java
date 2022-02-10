@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tamamura.qisen.LoginActivity;
+import com.tamamura.qisen.MainActivity;
 import com.tamamura.qisen.R;
 
 import java.io.ByteArrayOutputStream;
@@ -46,7 +47,7 @@ public class appHandler {
         builder.setPositiveButton("Ya", (dialog, which) -> {
             session.logout();
             appHandler.this.activity.finish();
-            appHandler.this.activity.startActivity(new Intent(appHandler.this.activity, LoginActivity.class));
+            appHandler.this.activity.startActivity(new Intent(appHandler.this.activity, MainActivity.class));
         });
         builder.setNegativeButton("Batal", (dialog, which) -> {
             dialog.dismiss();

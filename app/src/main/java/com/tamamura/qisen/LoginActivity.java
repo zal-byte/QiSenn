@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void parseResult(String result) throws Exception {
 
-        if( result.isEmpty() )
+        if( result == null )
         {
             Toast.makeText(this, "no_data", Toast.LENGTH_SHORT).show();
         }else
@@ -83,6 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
                         //true
                         session.setLogin(true);
+
                         if(session.getWhoami().equals("siswa") )
                         {
                             session.setNIS(object.getString("nis"));
@@ -93,6 +94,9 @@ public class LoginActivity extends AppCompatActivity {
 
                         LoginActivity.this.finish();
                         startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+
+                        System.out.println("good[error]");
+
 
                     }else{
                         System.out.println("Login[error]");

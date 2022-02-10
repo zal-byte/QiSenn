@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:openDrawer="start"
     android:fitsSystemWindows="true"
     android:id="@+id/dashboard_drawer"
     tools:context=".DashboardActivity">
@@ -12,7 +11,7 @@
     <include layout="@layout/dashboard_main_layout" />
 
     <com.google.android.material.navigation.NavigationView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:id="@+id/nav_view"
         android:layout_gravity="start"

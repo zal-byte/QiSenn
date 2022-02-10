@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/user"
+            android:icon="@drawable/ic_person_24_black"
+            android:title="User" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_exit_24_black"
+            android:title="Keluar" />
+    </group>
 
 </menu>

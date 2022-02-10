@@ -5,7 +5,6 @@
     android:layout_height="match_parent">
 
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +21,7 @@
                 android:layout_marginRight="19dp"
                 app:cardBackgroundColor="@color/shet"
                 app:cardElevation="8dp"
-                app:contentPadding="5dp">
+                app:contentPaddingLeft="10dp">
 
 
                 <RelativeLayout
@@ -30,20 +29,38 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:paddingTop="5dp"
                         android:layout_marginRight="5dp"
-                        android:src="@drawable/laporan_saya" />
+                        android:scaleType="fitXY"
+                        android:src="@drawable/hp" />
 
                     <TextView
+                        android:id="@+id/jangan_lupa_absen_hari_ini"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
+                        android:layout_centerVertical="false"
+                        android:layout_marginTop="10dp"
                         android:layout_marginLeft="5dp"
                         android:text="Jangan lupa\nAbsen Hari ini"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/jangan_lupa_absen_hari_ini"
+                        android:background="@drawable/rounded"
+                        android:drawableLeft="@drawable/ic_bi_camera"
+                        android:drawablePadding="10dp"
+                        android:backgroundTint="@color/white"
+                        android:padding="10dp"
+                        android:text="Foto disini"
+                        android:textAllCaps="false" />
+
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>

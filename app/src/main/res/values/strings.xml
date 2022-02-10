@@ -4,4 +4,6 @@
     <string name="str_kata_sandi">Kata Sandi</string>
     <string name="str_id">ID</string>
     <string name="landing_welcome">Selamat Datang di QiSen!</string>
+    <string name="nav_close">Tutup</string>
+    <string name="nav_open">Buka</string>
 </resources>
