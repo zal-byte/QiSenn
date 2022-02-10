@@ -49,14 +49,16 @@
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/jangan_lupa_absen_hari_ini"
-                        android:background="@drawable/rounded"
+
                         android:drawableLeft="@drawable/ic_bi_camera"
+                        app:backgroundTint="@color/white"
+                        android:background="@drawable/rounded"
+                        android:textColor="@color/black"
                         android:drawablePadding="10dp"
-                        android:backgroundTint="@color/white"
                         android:padding="10dp"
                         android:text="Foto disini"
                         android:textAllCaps="false" />
