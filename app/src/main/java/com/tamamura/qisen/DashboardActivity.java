@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
 import org.json.JSONArray;
@@ -46,6 +48,12 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     UserAction userAction;
 
     appHandler handler;
+
+
+    MaterialButton btn_absen;
+
+    View include_siswa, include_guru;
+    TextView jangan_lupa_absen_hari_ini;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +93,35 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         drawerToggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+
+        btn_absen = findViewById(R.id.btn_absen);
+        include_siswa = findViewById(R.id.include_siswa);
+        include_guru = findViewById(R.id.include_guru);
+
+        jangan_lupa_absen_hari_ini = findViewById(R.id.jangan_lupa_absen_hari_ini);
+
+
+        if(session.getWhoami().equals("siswa"))
+        {
+            include_siswa.setVisibility(View.VISIBLE);
+        }else if(session.getWhoami().equals("guru"))
+        {
+            include_guru.setVisibility(View.VISIBLE);
+        }
+
+
+        if(session.getWhoami().equals("siswa"))
+        {
+            btn_absen.setText("Foto disini!");
+            jangan_lupa_absen_hari_ini.setText("Jangan lupa\nabasen hari ini!");
+
+        }else if(session.getWhoami().equals("guru"))
+        {
+            btn_absen.setText("Cek disini!");
+            btn_absen.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_checklist_24, 0,0,0);
+            jangan_lupa_absen_hari_ini.setText("Cek Siswa hari ini!\n");
+        }
+
     }
 
     @Override
@@ -106,6 +143,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         dashboard_navigation_view.setNavigationItemSelectedListener(this);
 
+        btn_absen.setOnClickListener(View -> {
+            if (session.getIsTodayAbsen() != false) {
+                //Lanjut ke absen
+            } else {
+
+            }
+        });
     }
 
     ModelSiswa siswa = new ModelSiswa();

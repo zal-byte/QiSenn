@@ -15,6 +15,7 @@
             android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/dashboard_cardview_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="19dp"
@@ -33,8 +34,8 @@
                         android:layout_height="110dp"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:paddingTop="5dp"
                         android:layout_marginRight="5dp"
+                        android:paddingTop="5dp"
                         android:scaleType="fitXY"
                         android:src="@drawable/hp" />
 
@@ -43,29 +44,54 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="false"
-                        android:layout_marginTop="10dp"
                         android:layout_marginLeft="5dp"
+                        android:layout_marginTop="10dp"
                         android:text="Jangan lupa\nAbsen Hari ini"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_absen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/jangan_lupa_absen_hari_ini"
-
-                        android:drawableLeft="@drawable/ic_bi_camera"
-                        app:backgroundTint="@color/white"
                         android:background="@drawable/rounded"
-                        android:textColor="@color/black"
+                        android:drawableLeft="@drawable/ic_bi_camera"
                         android:drawablePadding="10dp"
-                        android:padding="10dp"
+                        android:padding="5dp"
                         android:text="Foto disini"
-                        android:textAllCaps="false" />
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        app:backgroundTint="@color/white" />
 
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
+            <View
+                android:id="@+id/dashboard_view_1"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_below="@id/dashboard_cardview_1"
+                android:layout_marginLeft="19dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="19dp"
+                android:background="@color/black" />
+
+            <include
+                android:id="@+id/include_siswa"
+                layout="@layout/gridlayout_siswa"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:layout_below="@id/dashboard_view_1" />
+            <include
+                android:id="@+id/include_guru"
+                layout="@layout/gridlayout_guru"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="match_parent"
+                android:layout_below="@id/dashboard_view_1" />
         </RelativeLayout>
 
     </FrameLayout>
