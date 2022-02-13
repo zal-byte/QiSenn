@@ -8,12 +8,14 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,6 +34,8 @@ public class LoginActivity extends AppCompatActivity {
     Session session;
     MaterialButton btn_login;
 
+    TextView txt_preview_1;
+    TextInputLayout text_input_layout_1, text_input_layout_2;
 
     appHandler handler;
 
@@ -60,6 +64,11 @@ public class LoginActivity extends AppCompatActivity {
         userAction = new UserAction(this);
 
         btn_login = findViewById(R.id.btn_login);
+
+        txt_preview_1 = findViewById(R.id.txt_preview_1);
+
+        text_input_layout_1 = findViewById(R.id.text_input_layout_1);
+        text_input_layout_2 = findViewById(R.id.text_input_layout_2);
     }
 
     private void parseResult(String result) throws Exception {
@@ -110,6 +119,19 @@ public class LoginActivity extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     private void logic() {
+
+        if(session.getWhoami().equals("siswa"))
+        {
+            txt_preview_1.setText("Masuk sebagai Siswa");
+            text_input_layout_1.setHint("NIS");
+        }else if(session.getWhoami().equals("guru"))
+        {
+            text_input_layout_1.setHint("NIK");
+            txt_preview_1.setText("Masuk sebagai guru");
+        }
+
+        text_input_layout_2.setHint("Kata sandi");
+
         btn_back.setOnClickListener(View -> {
             LoginActivity.this.finish();
             startActivity(new Intent(LoginActivity.this, MainActivity.class));

@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/drawable/ic_front_camera_24.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/drawable/ic_rear_camera_45.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/drawable/tendp_corner.xml" value="0.2703125" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_camera.xml" value="0.1" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_dashboard.xml" value="0.2536231884057971" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_login.xml" value="0.2" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/dashboard_header_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/dashboard_main_layout.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/gridlayout_guru.xml" value="0.2536231884057971" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

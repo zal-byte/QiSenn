@@ -1,6 +1,7 @@
 package com.tamamura.qisen;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,6 +18,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -55,6 +63,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     View include_siswa, include_guru;
     TextView jangan_lupa_absen_hari_ini;
 
+    FloatingActionButton dashboard_floating_action_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +90,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         dashboard_drawer = findViewById(R.id.dashboard_drawer);
         dashboard_navigation_view = findViewById(R.id.nav_view);
         dashboard_toolbar = findViewById(R.id.dashboard_toolbar);
-
+        dashboard_floating_action_button = findViewById(R.id.dashboard_floating_action_button);
 
         setSupportActionBar(dashboard_toolbar);
 
@@ -101,24 +111,21 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         jangan_lupa_absen_hari_ini = findViewById(R.id.jangan_lupa_absen_hari_ini);
 
 
-        if(session.getWhoami().equals("siswa"))
-        {
+        if (session.getWhoami().equals("siswa")) {
             include_siswa.setVisibility(View.VISIBLE);
-        }else if(session.getWhoami().equals("guru"))
-        {
+            dashboard_floating_action_button.setVisibility(View.GONE);
+        } else if (session.getWhoami().equals("guru")) {
             include_guru.setVisibility(View.VISIBLE);
         }
 
 
-        if(session.getWhoami().equals("siswa"))
-        {
+        if (session.getWhoami().equals("siswa")) {
             btn_absen.setText("Foto disini!");
-            jangan_lupa_absen_hari_ini.setText("Jangan lupa\nabasen hari ini!");
+            jangan_lupa_absen_hari_ini.setText("Jangan lupa\nabsen hari ini!");
 
-        }else if(session.getWhoami().equals("guru"))
-        {
+        } else if (session.getWhoami().equals("guru")) {
             btn_absen.setText("Cek disini!");
-            btn_absen.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_checklist_24, 0,0,0);
+            btn_absen.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_checklist_24, 0, 0, 0);
             jangan_lupa_absen_hari_ini.setText("Cek Siswa hari ini!\n");
         }
 
@@ -150,6 +157,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
             }
         });
+
+        btn_absen.setOnClickListener( View -> {
+            if(session.getWhoami().equals("siswa"))
+            {
+                this.startActivity(new Intent(DashboardActivity.this, CameraActivity.class));
+            }
+        });
     }
 
     ModelSiswa siswa = new ModelSiswa();
@@ -166,6 +180,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (result.isEmpty()) {
             Toast.makeText(this, "no_data", Toast.LENGTH_SHORT).show();
         } else {
+            System.out.println("[data] : " + result);
             JSONObject object = new JSONObject(result);
             String name = session.getWhoami().equals("siswa") ? "siswa" : (session.getWhoami().equals("guru") ? "guru" : null);
             JSONArray jsonArray = object.getJSONArray(name);
@@ -226,14 +241,34 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 String res = "";
 
 
-                try {
-                    String user = session.getWhoami().equals("siswa") ? "siswa" : (session.getWhoami().equals("guru") ? "guru" : null);
-                    String param = session.getWhoami().equals("siswa") ? "&NIS=" + session.getNIS() : (session.getWhoami().equals("guru") ? "&NIK=" + session.getNIK() : null);
-                    res = userAction.userProfile("?user=" + user + param);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+//                try {
+//
+//                    res = userAction.userProfile("?request=userProfile&user=" + session.getWhoami() + param);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+                String param = session.getWhoami().equals("siswa") ? "&NIS=" + session.getNIS() : (session.getWhoami().equals("guru") ? "&NIK=" + session.getNIK() : null);
+                StringRequest request = new StringRequest(Request.Method.GET, userAction.api + "?request=userProfile&user="+session.getWhoami()+param, new Response.Listener<String>(){
+                    @Override
+                    public void onResponse(String response)
+                    {
+                        try {
+                            userInformation(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
+                }, new Response.ErrorListener(){
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        System.out.println("Didn't work : " + error.getMessage());
+                    }
+                });
+
+                RequestQueue queue = Volley.newRequestQueue(DashboardActivity.this);
+                queue.add(request);
 
                 return res;
             }

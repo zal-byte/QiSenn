@@ -19,7 +19,7 @@ public class UserClient {
 
 
     public String api = "https://blyatblyatqisen.nasihosting.com/QiSen/api.php";
-
+    public String img_api = "https://blyatblyatqisen.nasihosting.com/QiSen/";
     public UserClient()
     {
 

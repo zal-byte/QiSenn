@@ -5,35 +5,48 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifSubIFDDirectory;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import static com.drew.metadata.exif.ExifDirectoryBase.TAG_DATETIME_ORIGINAL;
 
 public class ImageMetaData {
     Metadata metadata;
-    Date date;
+    final Date date;
 
     public ImageMetaData(File file) throws Exception {
-        metadata = ImageMetadataReader.readMetadata(file);
+        this.metadata = ImageMetadataReader.readMetadata(file);
         ExifSubIFDDirectory directory = metadata.getFirstDirectoryOfType(ExifSubIFDDirectory.class);
 
-        date = directory.getDate(TAG_DATETIME_ORIGINAL);
+        this.date = directory.getDateDigitized();
     }
 
     public String getImageTime() {
-        return dateFormat("HH:mm:ss");
+        TimeZone tz = TimeZone.getTimeZone("Asia/Jakarta");
+        DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        df.setTimeZone(tz); // strip timezone
+        return df.format(new Date());
     }
     public String getImageDate()
     {
-        return dateFormat("yyyy-mm-dd");
+        System.out.println(this.date);
+        return dateFormat("yyyy-MM-dd");
     }
 
 
     public String dateFormat(String format) {
-        SimpleDateFormat formatter = new SimpleDateFormat(format, Locale.US);
-        return formatter.format(date);
+        Locale locale = new Locale("id","ID");
+        SimpleDateFormat formatter = new SimpleDateFormat(format, locale);
+        if( this.date != null)
+        {
+            return formatter.format(this.date);
+        }else{
+            return "Date error";
+        }
+
     }
 
 

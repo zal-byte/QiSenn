@@ -27,7 +27,12 @@ public class UserAction extends UserClient{
 
     //end-login
     public String userProfile(String dest) throws Exception {
-        return get(api + "?request=userProfile" + dest );
+        return get(api + dest);
+    }
+
+    public String siswaAbsen(HashMap<String, String> map) throws  Exception
+    {
+        return post(api, map);
     }
 
 
