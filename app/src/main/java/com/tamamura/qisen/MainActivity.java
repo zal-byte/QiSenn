@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
     Session session;
     MaterialButton btn_siswa, btn_guru;
+    TextView admin;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         lay1 = findViewById(R.id.lay1);
         btn_siswa = findViewById(R.id.btn_siswa);
         btn_guru = findViewById(R.id.btn_guru);
+        admin = findViewById(R.id.admin);
 
     }
 
@@ -109,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
 
-
                 lay1.setVisibility(View.VISIBLE);
                 lay1.startAnimation(animation);
 
@@ -126,7 +130,11 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             session.setWhoami("guru");
         });
-
+        admin.setOnClickListener( View -> {
+            MainActivity.this.finish();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            session.setWhoami("admin");
+        });
 
 
 

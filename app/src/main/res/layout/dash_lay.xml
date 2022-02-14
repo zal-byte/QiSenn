@@ -46,18 +46,18 @@
                         android:layout_centerVertical="false"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
                         android:text="Jangan lupa\nAbsen Hari ini"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_absen"
-                        android:layout_width="wrap_content"
+                        android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/jangan_lupa_absen_hari_ini"
                         android:background="@drawable/rounded"
                         android:drawableLeft="@drawable/ic_bi_camera"
-                        android:drawablePadding="10dp"
                         android:padding="5dp"
                         android:text="Foto disini"
                         android:textAllCaps="false"
@@ -82,16 +82,25 @@
                 android:id="@+id/include_siswa"
                 layout="@layout/gridlayout_siswa"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="match_parent"
-                android:layout_below="@id/dashboard_view_1" />
+                android:layout_below="@id/dashboard_view_1"
+                android:visibility="gone" />
+
             <include
                 android:id="@+id/include_guru"
                 layout="@layout/gridlayout_guru"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="match_parent"
-                android:layout_below="@id/dashboard_view_1" />
+                android:layout_below="@id/dashboard_view_1"
+                android:visibility="gone" />
+
+            <include
+                android:id="@+id/include_admin"
+                layout="@layout/gridlayout_admin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/include_guru"
+                android:visibility="gone" />
         </RelativeLayout>
 
     </FrameLayout>

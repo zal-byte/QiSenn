@@ -1,25 +1,7 @@
 package ClassModel;
 
-public class ModelGuru {
-    String NIK;
-    String Nama;
-    String Tanggal_lahir;
-    String Tempat_lahir;
-    String Alamat;
-    String Jenis_kelamin;
-    String Agama;
-    String Foto;
-    String Password;
-
-    public String getWalikelas() {
-        return Walikelas;
-    }
-
-    public void setWalikelas(String walikelas) {
-        Walikelas = walikelas;
-    }
-
-    String Walikelas;
+public class ModelAdmin {
+    String NIK, Nama, Tanggal_lahir, Tempat_lahir, Alamat, Jenis_kelamin, Agama, Foto;
 
     public String getNIK() {
         return NIK;
@@ -83,13 +65,5 @@ public class ModelGuru {
 
     public void setFoto(String foto) {
         Foto = foto;
-    }
-
-    public String getPassword() {
-        return Password;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
     }
 }

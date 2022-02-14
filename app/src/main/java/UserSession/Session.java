@@ -25,7 +25,13 @@ public class Session {
     String NIK = "NIK";
     String Status = "Status";
 
+    String Kelas = "Kelas";
+
+
     String whoami = "whoami";
+
+
+
 
     public void setWhoami(String who) {
         this.editor.putString(this.whoami, who);
@@ -47,10 +53,22 @@ public class Session {
         editor.commit();
     }
 
+    public void setKelas(String kelas)
+    {
+        editor.putString(this.Kelas, kelas);
+        editor.commit();
+    }
+
+    public String getKelas()
+    {
+        return sharedPreferences.getString(this.Kelas, "");
+    }
+
     public void logout() {
         editor.putBoolean(this.Status, false);
         editor.putString(this.NIS, "");
         editor.putString(this.NIK, "");
+        editor.putString(this.Kelas, "");
         editor.putString(this.whoami, "");
         editor.commit();
     }

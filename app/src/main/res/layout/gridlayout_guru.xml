@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent">
     <GridLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="19dp"
@@ -18,19 +18,19 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/user_biodata"
+                android:id="@+id/guru_laporan_siswa"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/data_siswa" />
+                android:src="@drawable/guru_laporan_siswa" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center_horizontal"
-                android:text="Data Siswa"
+                android:text="Laporan Siswa"
                 android:textStyle="bold" />
 
         </LinearLayout>
@@ -44,48 +44,25 @@
             android:orientation="vertical">
 
             <ImageButton
-                android:id="@+id/user_report"
+                android:id="@+id/guru_kelas"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
 
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/laporan_siswa" />
+                android:src="@drawable/guru_kelas" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="Laporan Siswa"
+                android:text="Kelas"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:layout_marginLeft="10dp"
-            android:orientation="vertical">
-
-            <ImageButton
-                android:id="@+id/user_class"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@android:color/transparent"
-                android:scaleType="fitXY"
-                android:src="@drawable/riwayat_harian" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center_horizontal"
-                android:text="Riwayat Harian"
-                android:textStyle="bold" />
-        </LinearLayout>
 
 
     </GridLayout>

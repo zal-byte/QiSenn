@@ -6,4 +6,5 @@
     <string name="landing_welcome">Selamat Datang di QiSen!</string>
     <string name="nav_close">Tutup</string>
     <string name="nav_open">Buka</string>
+    <string name="apakah_anda_admin"><u>Apakah anda Kurikulum ?</u></string>
 </resources>

@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="shet">#0099ff</color>
+    <color name="shot">#D6EEFD</color>
 </resources>

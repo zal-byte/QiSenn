@@ -45,9 +45,9 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_height="260dp"
                         android:layout_alignParentBottom="true"
-                        android:alpha="0.8"
+                        android:alpha="0.7"
                         android:scaleType="center"
                         android:src="@drawable/ic_wave" />
 
@@ -72,19 +72,37 @@
                         android:layout_above="@id/btn_guru"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
-                        android:layout_marginBottom="8dp"
-                        android:text="Siswa"
+                        app:cornerRadius="10dp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="2dp"
+                        android:text="S i s w a"
                         android:textColor="@color/white" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_guru"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
+                        android:layout_above="@id/admin"
                         android:layout_marginLeft="10dp"
+                        app:cornerRadius="10dp"
+                        android:textStyle="bold"
                         android:layout_marginRight="10dp"
-                        android:text="Guru"
+                        android:text="G u r u"
                         android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/admin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:drawableStart="@drawable/ic_admin_shet_25"
+                        android:drawablePadding="5dp"
+                        android:text="@string/apakah_anda_admin"
+                        android:textSize="6pt"
+                        android:gravity="center_vertical"
+                        android:textStyle="bold" />
+
                 </RelativeLayout>
 
             </LinearLayout>

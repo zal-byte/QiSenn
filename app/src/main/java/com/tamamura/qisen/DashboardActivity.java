@@ -2,11 +2,13 @@ package com.tamamura.qisen;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.hardware.camera2.CameraManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +17,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -36,6 +39,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import ClassModel.ModelAdmin;
 import ClassModel.ModelGuru;
 import ClassModel.ModelSiswa;
 import Client.UserAction;
@@ -60,10 +64,24 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     MaterialButton btn_absen;
 
-    View include_siswa, include_guru;
+    View include_siswa, include_guru, include_admin, dashboard_view_1;
     TextView jangan_lupa_absen_hari_ini;
 
-    FloatingActionButton dashboard_floating_action_button;
+    CardView dashboard_cardview;
+
+
+
+    //bunch of imagebutton
+
+    //<Siswa>
+    ImageButton siswa_laporan_saya, siswa_kelas;
+    //<Guru>
+    ImageButton guru_laporan_siswa, guru_kelas;
+    //<Kurikulum>
+    ImageButton admin_tambah_guru, admin_edit_guru, admin_hapus_guru;
+    ImageButton admin_tambah_siswa, admin_edit_siswa, admin_hapus_siswa;
+    //end of <bunch of imagebutton>
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +108,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         dashboard_drawer = findViewById(R.id.dashboard_drawer);
         dashboard_navigation_view = findViewById(R.id.nav_view);
         dashboard_toolbar = findViewById(R.id.dashboard_toolbar);
-        dashboard_floating_action_button = findViewById(R.id.dashboard_floating_action_button);
+        dashboard_cardview = findViewById(R.id.dashboard_cardview_1);
+
+        dashboard_view_1 = findViewById(R.id.dashboard_view_1);
+
 
         setSupportActionBar(dashboard_toolbar);
 
@@ -107,15 +128,19 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         btn_absen = findViewById(R.id.btn_absen);
         include_siswa = findViewById(R.id.include_siswa);
         include_guru = findViewById(R.id.include_guru);
+        include_admin = findViewById(R.id.include_admin);
 
         jangan_lupa_absen_hari_ini = findViewById(R.id.jangan_lupa_absen_hari_ini);
 
 
         if (session.getWhoami().equals("siswa")) {
             include_siswa.setVisibility(View.VISIBLE);
-            dashboard_floating_action_button.setVisibility(View.GONE);
         } else if (session.getWhoami().equals("guru")) {
             include_guru.setVisibility(View.VISIBLE);
+        } else if (session.getWhoami().equals("admin")) {
+            include_admin.setVisibility(View.VISIBLE);
+            dashboard_cardview.setVisibility(View.GONE);
+            dashboard_view_1.setVisibility(View.GONE);
         }
 
 
@@ -128,6 +153,34 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             btn_absen.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_checklist_24, 0, 0, 0);
             jangan_lupa_absen_hari_ini.setText("Cek Siswa hari ini!\n");
         }
+
+
+
+        // Menu logic
+
+        if( include_siswa.getVisibility() == View.VISIBLE )
+        {
+            siswa_laporan_saya = findViewById(R.id.siswa_laporan_saya);
+            siswa_kelas = findViewById(R.id.siswa_kelas);
+        }else if ( include_guru.getVisibility() == View.VISIBLE )
+        {
+            guru_laporan_siswa = findViewById(R.id.guru_laporan_siswa);
+            guru_kelas = findViewById(R.id.guru_kelas);
+        }else if( include_admin.getVisibility() == View.VISIBLE )
+        {
+
+            admin_tambah_siswa = findViewById(R.id.admin_tambah_siswa);
+            admin_edit_siswa = findViewById(R.id.admin_edit_siswa);
+            admin_hapus_siswa = findViewById(R.id.admin_hapus_siswa);
+
+            admin_tambah_guru = findViewById(R.id.admin_tambah_guru);
+            admin_edit_guru = findViewById(R.id.admin_edit_guru);
+            admin_hapus_guru = findViewById(R.id.admin_hapus_guru);
+
+
+        }
+
+        //end of menu logic
 
     }
 
@@ -143,7 +196,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     @SuppressLint("RestrictedApi")
     private void logic() {
 
-
+        Toast.makeText(DashboardActivity.this, session.getNIK(), Toast.LENGTH_SHORT).show();
         //user name
 
         //end of user name
@@ -151,27 +204,43 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         dashboard_navigation_view.setNavigationItemSelectedListener(this);
 
         btn_absen.setOnClickListener(View -> {
-            if (session.getIsTodayAbsen() != false) {
-                //Lanjut ke absen
-            } else {
-
-            }
-        });
-
-        btn_absen.setOnClickListener( View -> {
-            if(session.getWhoami().equals("siswa"))
+            if (session.getWhoami().equals("siswa")) {
+                this.startActivity(new Intent(DashboardActivity.this, CameraActivity.class));
+            }else if(session.getWhoami().equals("guru"))
             {
                 this.startActivity(new Intent(DashboardActivity.this, CameraActivity.class));
             }
         });
+
+
+        if( include_siswa.getVisibility() == View.VISIBLE )
+        {
+            siswa_kelas.setOnClickListener( View -> {
+
+            });
+            siswa_laporan_saya.setOnClickListener( View-> {
+
+            });
+        }else if( include_guru.getVisibility() == View.VISIBLE )
+        {
+            guru_kelas.setOnClickListener( View -> {
+
+            });
+            guru_laporan_siswa.setOnClickListener( View -> {
+
+            });
+
+        }
+
     }
 
     ModelSiswa siswa = new ModelSiswa();
     ModelGuru guru = new ModelGuru();
+    ModelAdmin admin = new ModelAdmin();
 
     private void setData() {
         TextView text_nama = getSupportActionBar().getCustomView().findViewById(R.id.text_nama);
-        text_nama.setText(session.getWhoami().equals("siswa") ? siswa.getNama() : guru.getNama());
+        text_nama.setText(session.getWhoami().equals("siswa") ? siswa.getNama() : (session.getWhoami().equals("guru") ? guru.getNama() : (session.getWhoami().equals("admin") ? admin.getNama() : null)));
     }
 
 
@@ -182,7 +251,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         } else {
             System.out.println("[data] : " + result);
             JSONObject object = new JSONObject(result);
-            String name = session.getWhoami().equals("siswa") ? "siswa" : (session.getWhoami().equals("guru") ? "guru" : null);
+            String name = session.getWhoami().equals("siswa") ? "siswa" : (session.getWhoami().equals("guru") ? "guru" : (session.getWhoami().equals("admin") ? "admin" : null));
             JSONArray jsonArray = object.getJSONArray(name);
 
             if (jsonArray.length() > 0) {
@@ -209,6 +278,16 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                             guru.setJenis_kelamin(obj.getString("jenis_kelamin"));
                             guru.setAgama(obj.getString("agama"));
                             guru.setFoto(obj.getString("foto"));
+                        } else if (session.getWhoami().equals("admin")) {
+                            admin.setNIK(obj.getString("NIK"));
+                            admin.setNama(obj.getString("nama"));
+                            admin.setTanggal_lahir(obj.getString("tanggal_lahir"));
+                            admin.setTempat_lahir(obj.getString("tempat_lahir"));
+                            admin.setAlamat(obj.getString("alamat"));
+                            admin.setJenis_kelamin(obj.getString("jenis_kelamin"));
+                            admin.setAgama(obj.getString("agama"));
+                            admin.setFoto(obj.getString("foto"));
+
                         }
                     } else {
                         Toast.makeText(this, obj.getString("msg"), Toast.LENGTH_SHORT).show();
@@ -225,17 +304,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private void fetchUserInformation() {
         new AsyncTask<Void, Void, String>() {
 
-
-            @Override
-            protected void onPostExecute(String result) {
-                super.onPostExecute(result);
-                try {
-                    userInformation(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
             @Override
             protected String doInBackground(Void... voids) {
                 String res = "";
@@ -247,11 +315,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 //                } catch (Exception e) {
 //                    e.printStackTrace();
 //                }
-                String param = session.getWhoami().equals("siswa") ? "&NIS=" + session.getNIS() : (session.getWhoami().equals("guru") ? "&NIK=" + session.getNIK() : null);
-                StringRequest request = new StringRequest(Request.Method.GET, userAction.api + "?request=userProfile&user="+session.getWhoami()+param, new Response.Listener<String>(){
+                String param = session.getWhoami().equals("siswa") ? "&NIS=" + session.getNIS() : (session.getWhoami().equals("guru") ? "&NIK=" + session.getNIK() : (session.getWhoami().equals("admin") ? "&NIK=" + session.getNIK() : null));
+                StringRequest request = new StringRequest(Request.Method.GET, userAction.api + "?request=userProfile&user=" + session.getWhoami() + param, new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response)
-                    {
+                    public void onResponse(String response) {
                         try {
                             userInformation(response);
                         } catch (JSONException e) {
@@ -259,10 +326,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                         }
                     }
 
-                }, new Response.ErrorListener(){
+                }, new Response.ErrorListener() {
                     @Override
-                    public void onErrorResponse(VolleyError error)
-                    {
+                    public void onErrorResponse(VolleyError error) {
                         System.out.println("Didn't work : " + error.getMessage());
                     }
                 });
@@ -290,7 +356,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.user:
-                Toast.makeText(this, "Selected `user`", Toast.LENGTH_SHORT).show();
+                DashboardActivity.this.startActivity(new Intent(DashboardActivity.this,UserProfile.class));
                 break;
             case R.id.logout:
                 handler.userLogout();

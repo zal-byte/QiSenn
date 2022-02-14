@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout text_input_layout_1, text_input_layout_2;
 
     appHandler handler;
+    RelativeLayout login_relativelayout;
 
 
     @Override
@@ -69,34 +71,38 @@ public class LoginActivity extends AppCompatActivity {
 
         text_input_layout_1 = findViewById(R.id.text_input_layout_1);
         text_input_layout_2 = findViewById(R.id.text_input_layout_2);
+
+
+        login_relativelayout = findViewById(R.id.login_relativelayout);
+
     }
 
     private void parseResult(String result) throws Exception {
+        System.out.println("Login result : " + result);
 
-        if( result == null )
-        {
+        if (result == null) {
             Toast.makeText(this, "no_data", Toast.LENGTH_SHORT).show();
-        }else
-        {
+        } else {
+
             JSONObject jsonObject = new JSONObject(result);
-            String param = session.getWhoami().equals("siswa") ? "siswaLogin" : (session.getWhoami().equals("guru") ? "guruLogin" : null);
+            String param = session.getWhoami().equals("siswa") ? "siswaLogin" : (session.getWhoami().equals("guru") ? "guruLogin" : (session.getWhoami().equals("admin") ? "adminLogin" : null));
             JSONArray jsonArray = jsonObject.getJSONArray(param);
 
-            if( jsonArray.length() > 0 )
-            {
-                for(int i = 0 ; i < jsonArray.length(); i++)
-                {
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    if(object.getBoolean("res") == true)
-                    {
+                    if (object.getBoolean("res") == true) {
                         Toast.makeText(this, "test", Toast.LENGTH_SHORT).show();
                         //true
                         session.setLogin(true);
 
-                        if(session.getWhoami().equals("siswa") )
-                        {
+                        if (session.getWhoami().equals("siswa")) {
                             session.setNIS(object.getString("nis"));
-                        }else if(session.getWhoami().equals("guru"))
+                            session.setKelas(object.getString("kelas"));
+                        } else if (session.getWhoami().equals("guru")) {
+                            session.setKelas(object.getString("walikelas"));
+                            session.setNIK(object.getString("nik"));
+                        } else if (session.getWhoami().equals("admin"))
                         {
                             session.setNIK(object.getString("nik"));
                         }
@@ -104,10 +110,9 @@ public class LoginActivity extends AppCompatActivity {
                         LoginActivity.this.finish();
                         startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
 
-                        System.out.println("good[error]");
 
 
-                    }else{
+                    } else {
                         System.out.println("Login[error]");
                         Toast.makeText(this, object.getString("msg"), Toast.LENGTH_SHORT).show();
                     }
@@ -120,14 +125,19 @@ public class LoginActivity extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private void logic() {
 
-        if(session.getWhoami().equals("siswa"))
-        {
+
+        if (session.getWhoami().equals("siswa")) {
             txt_preview_1.setText("Masuk sebagai Siswa");
             text_input_layout_1.setHint("NIS");
-        }else if(session.getWhoami().equals("guru"))
-        {
+            login_relativelayout.setBackground(getResources().getDrawable(R.drawable.bg_login_siswa));
+        } else if (session.getWhoami().equals("guru")) {
             text_input_layout_1.setHint("NIK");
-            txt_preview_1.setText("Masuk sebagai guru");
+            txt_preview_1.setText("Masuk sebagai Guru");
+            login_relativelayout.setBackground(getResources().getDrawable(R.drawable.bg_login_guru));
+        } else if (session.getWhoami().equals("admin")) {
+            text_input_layout_1.setHint("NIK");
+            txt_preview_1.setText("Masuk sebagai Kurikulum");
+            login_relativelayout.setBackground(getResources().getDrawable(R.drawable.bg_login_admin));
         }
 
         text_input_layout_2.setHint("Kata sandi");
@@ -160,6 +170,8 @@ public class LoginActivity extends AppCompatActivity {
                     if (session.getWhoami().equals("siswa")) {
                         param.put("nis", identifier.getText().toString());
                     } else if (session.getWhoami().equals("guru")) {
+                        param.put("nik", identifier.getText().toString());
+                    } else if (session.getWhoami().equals("admin")) {
                         param.put("nik", identifier.getText().toString());
                     }
                     param.put("password", password.getText().toString());
