@@ -6,12 +6,50 @@
     android:layout_height="match_parent"
     tools:context=".KelasActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/kelas_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:id="@+id/toolbar_kelas"
-        android:background="@color/white"
-        app:title="Kelas (XII RPL B)"
-        />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/kelas_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="fill_parent"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/list_kelas_layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/no_data"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_school_warning_80" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_class_error"
+                    android:text="Error"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="10pt"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
 </RelativeLayout>

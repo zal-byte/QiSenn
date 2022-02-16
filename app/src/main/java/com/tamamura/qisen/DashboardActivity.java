@@ -216,7 +216,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if( include_siswa.getVisibility() == View.VISIBLE )
         {
             siswa_kelas.setOnClickListener( View -> {
-
+                DashboardActivity.this.startActivity(new Intent(DashboardActivity.this, KelasActivity.class));
             });
             siswa_laporan_saya.setOnClickListener( View-> {
 
@@ -224,7 +224,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }else if( include_guru.getVisibility() == View.VISIBLE )
         {
             guru_kelas.setOnClickListener( View -> {
-
+                startActivity(new Intent(DashboardActivity.this, KelasActivity.class));
             });
             guru_laporan_siswa.setOnClickListener( View -> {
 
