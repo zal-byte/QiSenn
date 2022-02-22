@@ -36,6 +36,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import Adapter.KelasAdapter;
 import ClassModel.ModelKelas;
@@ -188,6 +189,8 @@ public class KelasActivity extends AppCompatActivity {
     }
 
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -221,12 +224,24 @@ public class KelasActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                Toast.makeText(getApplicationContext(), newText, Toast.LENGTH_SHORT).show();
-                return true;
+                filter(newText);
+                return false;
             }
         });
-
-
-        return super.onCreateOptionsMenu(menu);
+        return true;
     }
+    private void filter(String text)
+    {
+        ArrayList<ModelKelas> filteredList = new ArrayList<>();
+        for(ModelKelas item : arr)
+        {
+            if(item.getNama().toLowerCase().contains(text.toLowerCase()))
+            {
+                filteredList.add(item);
+            }
+        }
+
+        adapter.filterList(filteredList);
+    }
+
 }

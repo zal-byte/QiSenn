@@ -19,6 +19,24 @@
         android:theme="@style/Theme.QiSen"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".guru.CekDisini"
+            android:theme="@style/Theme.WithoutActionBar"
+            android:exported="true" />
+        <activity
+            android:name=".guru.LaporanSiswa"
+            android:theme="@style/Theme.WithoutActionBar"
+            android:exported="true" />
+        <activity
+            android:name=".siswa.LaporanSaya"
+            android:exported="true" />
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
+        <activity
+            android:name=".admin.TambahUser"
+            android:exported="true"
+            android:theme="@style/Theme.WithoutActionBar" />
+        <activity
             android:name=".KelasActivity"
             android:exported="true" />
         <activity

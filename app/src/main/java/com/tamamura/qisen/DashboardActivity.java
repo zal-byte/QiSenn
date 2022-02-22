@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +31,9 @@ import com.android.volley.toolbox.Volley;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
+import com.tamamura.qisen.admin.TambahUser;
+import com.tamamura.qisen.guru.CekDisini;
+import com.tamamura.qisen.siswa.LaporanSaya;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -70,7 +74,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     CardView dashboard_cardview;
 
 
-
     //bunch of imagebutton
 
     //<Siswa>
@@ -82,6 +85,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     ImageButton admin_tambah_siswa, admin_edit_siswa, admin_hapus_siswa;
     //end of <bunch of imagebutton>
 
+
+    ImageView header_bg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +118,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         dashboard_view_1 = findViewById(R.id.dashboard_view_1);
 
 
+        header_bg = findViewById(R.id.header_bg);
+
+
+
         setSupportActionBar(dashboard_toolbar);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -135,8 +144,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         if (session.getWhoami().equals("siswa")) {
             include_siswa.setVisibility(View.VISIBLE);
+            header_bg.setImageDrawable(getResources().getDrawable(R.drawable.hp));
         } else if (session.getWhoami().equals("guru")) {
             include_guru.setVisibility(View.VISIBLE);
+            header_bg.setImageDrawable(getResources().getDrawable(R.drawable.checklist));
         } else if (session.getWhoami().equals("admin")) {
             include_admin.setVisibility(View.VISIBLE);
             dashboard_cardview.setVisibility(View.GONE);
@@ -155,19 +166,15 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         }
 
 
-
         // Menu logic
 
-        if( include_siswa.getVisibility() == View.VISIBLE )
-        {
+        if (include_siswa.getVisibility() == View.VISIBLE) {
             siswa_laporan_saya = findViewById(R.id.siswa_laporan_saya);
             siswa_kelas = findViewById(R.id.siswa_kelas);
-        }else if ( include_guru.getVisibility() == View.VISIBLE )
-        {
+        } else if (include_guru.getVisibility() == View.VISIBLE) {
             guru_laporan_siswa = findViewById(R.id.guru_laporan_siswa);
             guru_kelas = findViewById(R.id.guru_kelas);
-        }else if( include_admin.getVisibility() == View.VISIBLE )
-        {
+        } else if (include_admin.getVisibility() == View.VISIBLE) {
 
             admin_tambah_siswa = findViewById(R.id.admin_tambah_siswa);
             admin_edit_siswa = findViewById(R.id.admin_edit_siswa);
@@ -206,29 +213,40 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         btn_absen.setOnClickListener(View -> {
             if (session.getWhoami().equals("siswa")) {
                 this.startActivity(new Intent(DashboardActivity.this, CameraActivity.class));
-            }else if(session.getWhoami().equals("guru"))
-            {
-                this.startActivity(new Intent(DashboardActivity.this, CameraActivity.class));
+            } else if (session.getWhoami().equals("guru")) {
+                this.startActivity(new Intent(DashboardActivity.this, CekDisini.class));
             }
         });
 
 
-        if( include_siswa.getVisibility() == View.VISIBLE )
-        {
-            siswa_kelas.setOnClickListener( View -> {
+        if (include_siswa.getVisibility() == View.VISIBLE) {
+            siswa_kelas.setOnClickListener(View -> {
                 DashboardActivity.this.startActivity(new Intent(DashboardActivity.this, KelasActivity.class));
             });
-            siswa_laporan_saya.setOnClickListener( View-> {
-
+            siswa_laporan_saya.setOnClickListener(View -> {
+                Intent intent = new Intent(DashboardActivity.this, LaporanSaya.class);
+                startActivity(intent);
             });
-        }else if( include_guru.getVisibility() == View.VISIBLE )
-        {
-            guru_kelas.setOnClickListener( View -> {
+        } else if (include_guru.getVisibility() == View.VISIBLE) {
+            guru_kelas.setOnClickListener(View -> {
                 startActivity(new Intent(DashboardActivity.this, KelasActivity.class));
             });
-            guru_laporan_siswa.setOnClickListener( View -> {
+            guru_laporan_siswa.setOnClickListener(View -> {
 
             });
+
+        } else if (include_admin.getVisibility() == View.VISIBLE) {
+            admin_tambah_siswa.setOnClickListener(View -> {
+                Intent intent = new Intent(DashboardActivity.this, TambahUser.class);
+                intent.putExtra("user", "siswa");
+                startActivity(intent);
+            });
+            admin_tambah_guru.setOnClickListener(View -> {
+                Intent intent = new Intent(DashboardActivity.this, TambahUser.class);
+                intent.putExtra("user", "guru");
+                startActivity(intent);
+            });
+
 
         }
 
@@ -356,7 +374,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.user:
-                DashboardActivity.this.startActivity(new Intent(DashboardActivity.this,UserProfile.class));
+                Intent intent = new Intent(DashboardActivity.this, UserProfile.class);
+                intent.putExtra("view_as", "me");
+                startActivity(intent);
                 break;
             case R.id.logout:
                 handler.userLogout();

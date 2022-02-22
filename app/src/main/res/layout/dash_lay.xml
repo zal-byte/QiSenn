@@ -37,6 +37,7 @@
                         android:layout_marginRight="5dp"
                         android:paddingTop="5dp"
                         android:scaleType="fitXY"
+                        android:id="@+id/header_bg"
                         android:src="@drawable/hp" />
 
                     <TextView

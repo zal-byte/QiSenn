@@ -12,11 +12,17 @@
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/drawable/rounded_right.xml" value="0.2703125" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/drawable/tendp_corner.xml" value="0.2703125" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_camera.xml" value="0.2" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_cek_disini.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_dashboard.xml" value="0.2536231884057971" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_kelas.xml" value="0.21663778162911612" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_laporan_saya.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_laporan_siswa.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_tambah_siswa.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_tambah_user.xml" value="0.2" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/activity_user_profile.xml" value="0.4" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/cek_disini_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/dash_lay.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/dashboard_header_layout.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/dashboard_main_layout.xml" value="0.25416666666666665" />
@@ -24,6 +30,7 @@
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/gridlayout_admin.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/gridlayout_guru.xml" value="0.2536231884057971" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/gridlayout_siswa.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/laporan_layout.xml" value="0.4" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/layout/list_kelas_layout.xml" value="0.2" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/menu/dashboard_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/IRSYAD F/AndroidStudioProjects/QiSenn/app/src/main/res/menu/kelas_option_menu.xml" value="0.25416666666666665" />

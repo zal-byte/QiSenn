@@ -18,10 +18,10 @@ public class UserClient {
     public String userDefaultImage = "img/user/default.jpg";
 
 
-//    public String api = "https://blyatblyatqisen.nasihosting.com/QiSen/api.php";
-//    public String img_api = "https://blyatblyatqisen.nasihosting.com/QiSen/";
-    public String api = "http://192.168.1.4/QiSen/api.php";
-    public String img_api = "http://192.168.1.4/QiSen/";
+    public String api = "https://blyatblyatqisen.nasihosting.com/QiSen/api.php";
+    public String img_api = "https://blyatblyatqisen.nasihosting.com/QiSen/";
+//    public String api = "http://192.168.137.1/QiSen/api.php";
+//    public String img_api = "http://192.168.137.1/QiSen/";
 
     public UserClient()
     {
