@@ -1,6 +1,7 @@
 package com.tamamura.qisen.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.os.AsyncTask;
@@ -36,6 +37,9 @@ public class TampilUser extends AppCompatActivity {
 
     Spinner kelas_spinner;
     UserAction userAction;
+
+    RecyclerView tampil_recyclerview;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +70,7 @@ public class TampilUser extends AppCompatActivity {
     void init()
     {
         kelas_spinner = findViewById(R.id.kelas_spinner);
-
+        tampil_recyclerview = findViewById(R.id.tampil_recyclerview);
     }
     void logic()
     {
