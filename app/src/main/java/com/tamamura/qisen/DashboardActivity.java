@@ -38,6 +38,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.tamamura.qisen.admin.TambahUser;
+import com.tamamura.qisen.admin.TampilUser;
 import com.tamamura.qisen.guru.CekDisini;
 import com.tamamura.qisen.siswa.LaporanSaya;
 
@@ -114,41 +115,37 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         runningTask = new LongOperation();
 
 
-        if(session.getWhoami().equals("siswa"))
-        {
+        if (session.getWhoami().equals("siswa")) {
             runningTask.execute();
         }
 
     }
+
     public static AsyncTask<Void, Void, String> runningTask;
 
     @Override
-    protected void onDestroy()
-    {
+    protected void onDestroy() {
         super.onDestroy();
 
-        if( runningTask != null )
+        if (runningTask != null)
             System.out.println("Destroyed!");
-            runningTask.cancel(true);
+        runningTask.cancel(true);
 
 
     }
 
     @SuppressLint("StaticFieldLeak")
-    public static final class LongOperation extends AsyncTask<Void, Void, String>
-    {
+    public static final class LongOperation extends AsyncTask<Void, Void, String> {
         private boolean status = true;
+
         @RequiresApi(api = Build.VERSION_CODES.O)
         @Override
         protected String doInBackground(Void... voids) {
-            while( status )
-            {
-                try
-                {
+            while (status) {
+                try {
                     DashboardActivity.checkHasAbsen();
                     Thread.sleep(5000);
-                }catch (Exception e)
-                {
+                } catch (Exception e) {
                     status = false;
                     this.cancel(true);
                     e.printStackTrace();
@@ -166,11 +163,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     @SuppressLint("StaticFieldLeak")
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private static void checkHasAbsen()
-    {
+    private static void checkHasAbsen() {
         LocalDate localDate = LocalDate.now();
         String param = "?request=hasAbsenToday&nis=" + DashboardActivity.sesi.getNIS() + "&tanggal=" + localDate.toString() + "&kelas=" + DashboardActivity.sesi.getKelas();
-        StringRequest sr = new StringRequest(Request.Method.GET, staticUserAction.api + param , new Response.Listener<String>() {
+        StringRequest sr = new StringRequest(Request.Method.GET, staticUserAction.api + param, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
@@ -193,16 +189,13 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     }
 
-    private static void hideBtnAbsen(boolean status)
-    {
+    private static void hideBtnAbsen(boolean status) {
         MaterialButton btn_absen = activity.findViewById(R.id.btn_absen);
         TextView jangan_lupa_absen_hari_ini = activity.findViewById(R.id.jangan_lupa_absen_hari_ini);
-        if(status)
-        {
+        if (status) {
             jangan_lupa_absen_hari_ini.setText("Selamat beraktivitas!");
             btn_absen.setVisibility(View.GONE);
-        }else
-        {
+        } else {
             jangan_lupa_absen_hari_ini.setText("Jangan lupa\nabsen hari ini!");
             btn_absen.setVisibility(View.VISIBLE);
         }
@@ -211,25 +204,19 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
 
     private static void parse(String result) throws JSONException {
-        System.out.println("Data: "  +result);
-        if( result.isEmpty() )
-        {
+        System.out.println("Data: " + result);
+        if (result.isEmpty()) {
             Snackbar.make(activity.getWindow().getDecorView().getRootView(), "Tidak ada respon dari server", Snackbar.LENGTH_SHORT).show();
-        }else
-        {
+        } else {
             JSONObject jsonObject = new JSONObject(result);
 
             JSONArray jsonArray = jsonObject.getJSONArray("hasAbsenToday");
-            if( jsonArray.length() > 0)
-            {
-                for(int i = 0; i < jsonArray.length();i++)
-                {
-                    JSONObject object= jsonArray.getJSONObject(i);
-                    if( object.getBoolean("status") == true )
-                    {
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    if (object.getBoolean("status") == true) {
                         DashboardActivity.hideBtnAbsen(true);
-                    }else
-                    {
+                    } else {
                         DashboardActivity.hideBtnAbsen(false);
                     }
                 }
@@ -382,6 +369,18 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 intent.putExtra("user", "guru");
                 startActivity(intent);
             });
+
+            admin_edit_guru.setOnClickListener(View -> {
+                Intent intent = new Intent(DashboardActivity.this, TampilUser.class);
+                intent.putExtra("user", "guru");
+                startActivity(intent);
+            });
+            admin_edit_siswa.setOnClickListener(View -> {
+                Intent intent = new Intent(DashboardActivity.this, TampilUser.class);
+                intent.putExtra("user", "siswa");
+                startActivity(intent);
+            });
+
 
 
         }
