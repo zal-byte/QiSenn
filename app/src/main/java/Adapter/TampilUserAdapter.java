@@ -51,6 +51,7 @@ public class TampilUserAdapter extends RecyclerView.Adapter<TampilUserAdapter.My
         return this.data.size();
     }
 
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView identifier, nama;
         CircleImageView user_img;

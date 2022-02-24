@@ -76,6 +76,9 @@ public class TampilUser extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //getDataByKelas
+                data.clear();
+                adapter.notifyDataSetChanged();
+                getUserByKelas(kelas_list.get(position));
             }
 
             @Override
@@ -90,6 +93,7 @@ public class TampilUser extends AppCompatActivity {
     ArrayList<ModelTampilUser> data = new ArrayList<>();
 
     private void parse(String result) throws JSONException {
+        System.out.println("TAI : " + result);
         if (result.isEmpty()) {
             Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada respon dari server", Snackbar.LENGTH_LONG).show();
         } else {
@@ -139,6 +143,13 @@ public class TampilUser extends AppCompatActivity {
 
     private void getUserByKelas(String kelas) {
         String param = "";
+        if(whoami().equals("siswa"))
+        {
+            param = "?request=getSiswaByKelas&kelas=" + kelas;
+        }else if(whoami().equals("guru"))
+        {
+            param = "?request=getGuruByKelas&kelas=" + kelas;
+        }
         StringRequest sr = new StringRequest(Request.Method.GET, userAction.api + param, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
