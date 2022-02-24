@@ -1,6 +1,7 @@
 package com.tamamura.qisen.admin;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -32,6 +33,7 @@ import java.util.List;
 
 import ClassModel.ModelTampilUser;
 import Client.UserAction;
+import Adapter.TampilUserAdapter;
 
 public class TampilUser extends AppCompatActivity {
 
@@ -52,29 +54,24 @@ public class TampilUser extends AppCompatActivity {
         logic();
     }
 
-    private String whoami()
-    {
-        if( getIntent() != null )
-        {
+    private String whoami() {
+        if (getIntent() != null) {
             return getIntent().getStringExtra("user");
-        }else
-        {
+        } else {
             return null;
         }
     }
 
-    void classInit()
-    {
+    void classInit() {
         userAction = new UserAction(this);
     }
 
-    void init()
-    {
+    void init() {
         kelas_spinner = findViewById(R.id.kelas_spinner);
         tampil_recyclerview = findViewById(R.id.tampil_recyclerview);
     }
-    void logic()
-    {
+
+    void logic() {
         kelas_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -89,51 +86,58 @@ public class TampilUser extends AppCompatActivity {
 
         getKelas();
     }
-    ArrayList<ModelTampilUser> data = new ArrayList<>();
-    private void parse(String result ) throws JSONException {
-        if( result.isEmpty() )
-        {
-            Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada respon dari server", Snackbar.LENGTH_LONG).show();
-        }else
-        {
-            JSONObject jsonObject = new JSONObject(result);
-            String name= "";
 
-            if(whoami().equals("siswa"))
-            {
+    ArrayList<ModelTampilUser> data = new ArrayList<>();
+
+    private void parse(String result) throws JSONException {
+        if (result.isEmpty()) {
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada respon dari server", Snackbar.LENGTH_LONG).show();
+        } else {
+            JSONObject jsonObject = new JSONObject(result);
+            String name = "";
+
+            if (whoami().equals("siswa")) {
                 name = "getSiswaByKelas";
-            }else if (whoami().equals("guru"))
-            {
-                name= "getGuruByKelas";
+            } else if (whoami().equals("guru")) {
+                name = "getGuruByKelas";
             }
 
             JSONArray jsonArray = jsonObject.getJSONArray(name);
-            if( jsonArray.length() > 0 )
-            {
-                for(int i = 0; i < jsonArray.length();i++)
-                {
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    if( object.getBoolean("res") != false )
-                    {
-                
-                    }else
-                    {
-                        if( object.getString("msg").toLowerCase().equals("eksekusi_gagal"))
-                        {
+                    if (object.getBoolean("res") != false) {
+                        ModelTampilUser datas = new ModelTampilUser();
+                        datas.setFoto(object.getString("foto"));
+                        datas.setIdentifier(object.getString("identifier"));
+                        datas.setNama(object.getString("nama"));
+                        data.add(datas);
+                    } else {
+                        if (object.getString("msg").toLowerCase().equals("eksekusi_gagal")) {
                             Snackbar.make(getWindow().getDecorView().getRootView(), "Gagal mengeksekusi data", Snackbar.LENGTH_LONG).show();
                         }
                     }
                 }
-            }else
-            {
+
+                setData();
+            } else {
                 Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada data", Snackbar.LENGTH_LONG).show();
             }
         }
     }
 
+    TampilUserAdapter adapter;
 
-    private void getUserByKelas( String kelas )
-    {
+    private void setData() {
+        adapter = new TampilUserAdapter(data, this);
+        if (data.size() > 0) {
+            tampil_recyclerview.setLayoutManager(new LinearLayoutManager(this));
+            tampil_recyclerview.setAdapter(adapter);
+        }
+    }
+
+
+    private void getUserByKelas(String kelas) {
         String param = "";
         StringRequest sr = new StringRequest(Request.Method.GET, userAction.api + param, new Response.Listener<String>() {
             @Override
@@ -155,57 +159,46 @@ public class TampilUser extends AppCompatActivity {
     }
 
 
-
     List<String> kelas_list = new ArrayList<>();
 
     @SuppressLint("StaticFieldLeak")
-    private void sparseKelas(String result ) throws JSONException {
+    private void sparseKelas(String result) throws JSONException {
         System.out.println("getkelas : " + result);
-        if( result.isEmpty())
-        {
+        if (result.isEmpty()) {
             Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada respon dari server", Snackbar.LENGTH_SHORT).show();
-        }else
-        {
+        } else {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("getKelas");
 
-            if( jsonArray.length() > 0 )
-            {
-                for(int i = 0; i < jsonArray.length();i++)
-                {
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    if( object.getBoolean("res") != false )
-                    {
+                    if (object.getBoolean("res") != false) {
                         kelas_list.add(object.getString("kelas"));
-                    }else
-                    {
-                        if( object.getString("msg").toLowerCase().equals("eksekusi_gagal"))
-                        {
+                    } else {
+                        if (object.getString("msg").toLowerCase().equals("eksekusi_gagal")) {
                             Snackbar.make(getWindow().getDecorView().getRootView(), "Gagal mengeksekusi data", Snackbar.LENGTH_LONG).show();
                         }
                     }
                 }
-                if( !kelas_list.isEmpty())
-                {
+                if (!kelas_list.isEmpty()) {
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, kelas_list);
                     kelas_spinner.setAdapter(adapter);
                 }
-            }else
-            {
+            } else {
                 Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada data", Snackbar.LENGTH_SHORT).show();
             }
 
         }
     }
 
-    private void getKelas()
-    {
+    private void getKelas() {
         String param = "?request=getKelas";
         StringRequest sr = new StringRequest(Request.Method.GET, userAction.api + param, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    sparseKelas( response );
+                    sparseKelas(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
