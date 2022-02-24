@@ -1,9 +1,11 @@
 package com.tamamura.qisen;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.hardware.camera2.CameraManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +34,7 @@ import com.android.volley.toolbox.Volley;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 import com.tamamura.qisen.admin.TambahUser;
 import com.tamamura.qisen.guru.CekDisini;
 import com.tamamura.qisen.siswa.LaporanSaya;
@@ -40,6 +44,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -88,20 +93,142 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     ImageView header_bg;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        DashboardActivity.activity = DashboardActivity.this;
+        DashboardActivity.staticUserAction = new UserAction(this);
+        DashboardActivity.sesi = new Session(this);
         classInit();
         viewInit();
 
         fetchUserInformation();
 
         logic();
+        DashboardActivity.checkHasAbsen();
+        runningTask = new LongOperation();
+
+
+        runningTask.execute();
+
     }
+    public static AsyncTask<Void, Void, String> runningTask;
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+
+        if( runningTask != null )
+            System.out.println("Destroyed!");
+            runningTask.cancel(true);
+
+
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    public static final class LongOperation extends AsyncTask<Void, Void, String>
+    {
+        private boolean status = true;
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        protected String doInBackground(Void... voids) {
+            while( status )
+            {
+                try
+                {
+                    DashboardActivity.checkHasAbsen();
+                    Thread.sleep(5000);
+                }catch (Exception e)
+                {
+                    status = false;
+                    this.cancel(true);
+                    e.printStackTrace();
+                }
+            }
+            return "executed";
+        }
+    }
+
+
+    private static Activity activity;
+    private static UserAction staticUserAction;
+    private static Session sesi;
+
+
+    @SuppressLint("StaticFieldLeak")
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private static void checkHasAbsen()
+    {
+        LocalDate localDate = LocalDate.now();
+        String param = "?request=hasAbsenToday&nis=" + DashboardActivity.sesi.getNIS() + "&tanggal=" + localDate.toString() + "&kelas=" + DashboardActivity.sesi.getKelas();
+        StringRequest sr = new StringRequest(Request.Method.GET, staticUserAction.api + param , new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    parse(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+
+        RequestQueue queue = Volley.newRequestQueue(activity);
+        queue.add(sr);
+
+
+    }
+
+    private static void hideBtnAbsen(boolean status)
+    {
+        MaterialButton btn_absen = activity.findViewById(R.id.btn_absen);
+        if(status)
+        {
+            btn_absen.setVisibility(View.GONE);
+        }else
+        {
+            btn_absen.setVisibility(View.VISIBLE);
+        }
+        System.out.println("Status: " + status);
+    }
+
+
+    private static void parse(String result) throws JSONException {
+        System.out.println("Data: "  +result);
+        if( result.isEmpty() )
+        {
+            Snackbar.make(activity.getWindow().getDecorView().getRootView(), "Tidak ada respon dari server", Snackbar.LENGTH_SHORT).show();
+        }else
+        {
+            JSONObject jsonObject = new JSONObject(result);
+
+            JSONArray jsonArray = jsonObject.getJSONArray("hasAbsenToday");
+            if( jsonArray.length() > 0)
+            {
+                for(int i = 0; i < jsonArray.length();i++)
+                {
+                    JSONObject object= jsonArray.getJSONObject(i);
+                    if( object.getBoolean("status") == true )
+                    {
+                        DashboardActivity.hideBtnAbsen(true);
+                    }else
+                    {
+                        DashboardActivity.hideBtnAbsen(false);
+                    }
+                }
+            }
+        }
+    }
+
 
     private void classInit() {
         session = new Session(this);
@@ -119,7 +246,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
 
         header_bg = findViewById(R.id.header_bg);
-
 
 
         setSupportActionBar(dashboard_toolbar);
@@ -158,7 +284,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         if (session.getWhoami().equals("siswa")) {
             btn_absen.setText("Foto disini!");
             jangan_lupa_absen_hari_ini.setText("Jangan lupa\nabsen hari ini!");
-
         } else if (session.getWhoami().equals("guru")) {
             btn_absen.setText("Cek disini!");
             btn_absen.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_checklist_24, 0, 0, 0);
@@ -200,6 +325,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         return super.onOptionsItemSelected(item);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint("RestrictedApi")
     private void logic() {
 
@@ -212,6 +338,8 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
         btn_absen.setOnClickListener(View -> {
             if (session.getWhoami().equals("siswa")) {
+                DashboardActivity.runningTask.cancel(true);
+
                 this.startActivity(new Intent(DashboardActivity.this, CameraActivity.class));
             } else if (session.getWhoami().equals("guru")) {
                 this.startActivity(new Intent(DashboardActivity.this, CekDisini.class));
@@ -249,6 +377,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
 
         }
+
 
     }
 

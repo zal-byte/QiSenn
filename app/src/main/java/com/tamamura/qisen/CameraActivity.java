@@ -1,6 +1,7 @@
 package com.tamamura.qisen;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageAnalysis;
@@ -20,6 +21,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
@@ -43,6 +45,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -128,7 +131,11 @@ public class CameraActivity extends AppCompatActivity {
         startCameras();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void parse(String result) throws JSONException {
+        LocalDate localDate = LocalDate.now();
+
+
 
         if (result != null) {
             JSONObject jsonObject = new JSONObject(result);
@@ -139,6 +146,13 @@ public class CameraActivity extends AppCompatActivity {
                     if (object.getBoolean("res")) {
                         String pesan = object.getString("msg");
                         if (pesan.toLowerCase().equals("absen berhasil ditambahkan.")) {
+
+
+                            session.setDateToday(localDate.toString());
+                            session.setIsTodayAbsen(false);
+
+
+
                             dangerous_hint.setVisibility(View.GONE);
                             camera_card_view_1.setVisibility(View.GONE);
                             camera_card_view_2.setVisibility(View.VISIBLE);
@@ -150,6 +164,13 @@ public class CameraActivity extends AppCompatActivity {
                         }
                     } else {
                         if (object.getString("msg").toLowerCase().equals("kamu telat")) {
+
+
+                            session.setDateToday(localDate.toString());
+                            session.setIsTodayAbsen(false);
+
+
+
                             dangerous_hint.setVisibility(View.GONE);
                             camera_card_view_1.setVisibility(View.GONE);
                             camera_card_view_2.setVisibility(View.VISIBLE);
@@ -177,6 +198,8 @@ public class CameraActivity extends AppCompatActivity {
         } else {
             Toast.makeText(CameraActivity.this, "null", Toast.LENGTH_SHORT).show();
         }
+        DashboardActivity.runningTask = new DashboardActivity.LongOperation();
+        DashboardActivity.runningTask.execute();
 
     }
 
@@ -193,6 +216,7 @@ public class CameraActivity extends AppCompatActivity {
                 loading = ProgressDialog.show(CameraActivity.this, "Mengirim", "Mengirim data absen", false, false);
             }
 
+            @SuppressLint("NewApi")
             @Override
             protected void onPostExecute(String result) {
                 super.onPostExecute(result);

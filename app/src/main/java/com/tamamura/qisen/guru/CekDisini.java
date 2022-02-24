@@ -96,7 +96,9 @@ public class CekDisini extends AppCompatActivity {
                     ModelCekDisini cekDisini = new ModelCekDisini();
                     cekDisini.setNama(object.getString("nama"));
                     cekDisini.setStatus_absen(object.getString("status_absen"));
-
+                    cekDisini.setImg_date(object.getString("img_date"));
+                    cekDisini.setImg_time(object.getString("img_time"));
+                    cekDisini.setPath(object.getString("path"));
 
                     modelCekDisinis.add(cekDisini);
 

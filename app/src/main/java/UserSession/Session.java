@@ -31,8 +31,6 @@ public class Session {
     String whoami = "whoami";
 
 
-
-
     public void setWhoami(String who) {
         this.editor.putString(this.whoami, who);
         editor.commit();
@@ -53,14 +51,12 @@ public class Session {
         editor.commit();
     }
 
-    public void setKelas(String kelas)
-    {
+    public void setKelas(String kelas) {
         editor.putString(this.Kelas, kelas);
         editor.commit();
     }
 
-    public String getKelas()
-    {
+    public String getKelas() {
         return sharedPreferences.getString(this.Kelas, "");
     }
 
@@ -89,14 +85,26 @@ public class Session {
         return sharedPreferences.getString(this.whoami, "");
     }
 
-    String isTodayAbsen = "isTodayAbsen";
 
-    public Boolean getIsTodayAbsen() {
-        return this.sharedPreferences.getBoolean(this.isTodayAbsen, false);
+    String isTodayAbsen = "isTodayAbsen";
+    String dateToday = "dateToday";
+
+    public String getDateToday() {
+        return sharedPreferences.getString(this.dateToday, "");
     }
 
-    public void setIsTodayAbsen(Boolean status) {
-        this.editor.putBoolean(this.isTodayAbsen, status);
+    public boolean getIsTodayAbsen() {
+        return sharedPreferences.getBoolean(this.isTodayAbsen, true);
+    }
+
+    public void setDateToday(String date) {
+        editor.putString(this.dateToday, date);
+        editor.commit();
+    }
+
+    public void setIsTodayAbsen(boolean status) {
+        editor.putBoolean(this.isTodayAbsen, status);
+        editor.commit();
     }
 
 
