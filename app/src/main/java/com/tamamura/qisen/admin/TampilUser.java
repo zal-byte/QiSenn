@@ -30,6 +30,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+import ClassModel.ModelTampilUser;
 import Client.UserAction;
 
 public class TampilUser extends AppCompatActivity {
@@ -77,7 +78,7 @@ public class TampilUser extends AppCompatActivity {
         kelas_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(TampilUser.this, kelas_list.get(position), Toast.LENGTH_SHORT).show();
+                //getDataByKelas
             }
 
             @Override
@@ -88,6 +89,71 @@ public class TampilUser extends AppCompatActivity {
 
         getKelas();
     }
+    ArrayList<ModelTampilUser> data = new ArrayList<>();
+    private void parse(String result ) throws JSONException {
+        if( result.isEmpty() )
+        {
+            Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada respon dari server", Snackbar.LENGTH_LONG).show();
+        }else
+        {
+            JSONObject jsonObject = new JSONObject(result);
+            String name= "";
+
+            if(whoami().equals("siswa"))
+            {
+                name = "getSiswaByKelas";
+            }else if (whoami().equals("guru"))
+            {
+                name= "getGuruByKelas";
+            }
+
+            JSONArray jsonArray = jsonObject.getJSONArray(name);
+            if( jsonArray.length() > 0 )
+            {
+                for(int i = 0; i < jsonArray.length();i++)
+                {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    if( object.getBoolean("res") != false )
+                    {
+                
+                    }else
+                    {
+                        if( object.getString("msg").toLowerCase().equals("eksekusi_gagal"))
+                        {
+                            Snackbar.make(getWindow().getDecorView().getRootView(), "Gagal mengeksekusi data", Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+                }
+            }else
+            {
+                Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada data", Snackbar.LENGTH_LONG).show();
+            }
+        }
+    }
+
+
+    private void getUserByKelas( String kelas )
+    {
+        String param = "";
+        StringRequest sr = new StringRequest(Request.Method.GET, userAction.api + param, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    parse(response);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(sr);
+    }
+
 
 
     List<String> kelas_list = new ArrayList<>();
