@@ -3,6 +3,8 @@ package com.tamamura.qisen.admin;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -23,6 +25,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 import com.tamamura.qisen.R;
 import com.theartofdev.edmodo.cropper.CropImage;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -193,7 +199,13 @@ public class TambahUser extends AppCompatActivity {
         StringRequest sr = new StringRequest(Request.Method.POST, userAction.api, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(TambahUser.this, response, Toast.LENGTH_SHORT).show();
+                System.out.println("TambahUser: " + response );
+
+                try {
+                    parseResponse( response );
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -209,6 +221,86 @@ public class TambahUser extends AppCompatActivity {
 
         queue.add(sr);
     }
+    private void parseResponse( String response ) throws JSONException {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TambahUser.this);
+
+        if( response.isEmpty())
+        {
+            builder.setMessage("Tidak ada respon dari server");
+        }else
+        {
+            JSONObject jsonObject = new JSONObject(response);
+            String name = "";
+            if( getIntent().getStringExtra("user").equals("siswa"))
+            {
+                name = "addSiswa";
+            }else if(getIntent().getStringExtra("user").equals("guru"))
+            {
+                name = "addGuru";
+            }
+            JSONArray jsonArray = jsonObject.getJSONArray(name);
+
+            if( jsonArray.length() > 0 )
+            {
+                for(int i = 0; i < jsonArray.length();i++)
+                {
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    if( object.getBoolean("res") != false )
+                    {
+                        if(object.getString("msg").toLowerCase().equals("siswa_berhasil_ditambahkan")){
+                            builder.setMessage("Data siswa berhasil ditambahkan");
+                            clearField();
+                        }else if(object.getString("msg").toLowerCase().equals("guru_berhasil_ditambahkan"))
+                        {
+                            builder.setMessage("Data guru berhasil ditambahkan");
+                            clearField();
+                        }
+                    }else
+                    {
+                        if( object.getString("msg").toLowerCase().equals("siswa_sudah_ada"))
+                        {
+                            builder.setMessage("Siswa dengan NIS ( " + identifier.getText().toString() + " ) Sudah ada");
+                        }else if (object.getString("msg").toLowerCase().equals("gagal_mengupload_gambar"))
+                        {
+                            builder.setMessage("Gagal mengupload gambar pengguna");
+                        }else if( object.getString("msg").toLowerCase().equals("eksekusi_gagal"))
+                        {
+                            builder.setMessage("Gagal mengeksekusi data");
+                        }else if( object.getString("msg").toLowerCase().equals("guru_sudah_ada"))
+                        {
+                            builder.setMessage("Guru dengan NIK ( " + identifier.getText().toString() + " ) Sudah ada");
+                        }
+                    }
+                }
+            }else
+            {
+                builder.setMessage("Tidak ada data");
+            }
+        }
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.show();
+    }
+
+    private void clearField()
+    {
+        param.clear();
+        user_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_img_black_24));
+        identifier.setText("");
+        nama.setText("");
+        tanggal_lahir.setText("");
+        tempat_lahir.setText("");
+        alamat.setText("");
+        jenis_kelamin.setText("");
+        agama.setText("");
+        kelas.setText("");
+        kata_sandi.setText("");
+    }
+
 
     private String get(TextInputEditText widget) {
         return widget.getText().toString();

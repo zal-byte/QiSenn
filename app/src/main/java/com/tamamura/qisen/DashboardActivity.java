@@ -2,6 +2,8 @@ package com.tamamura.qisen;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.camera2.CameraManager;
 import android.os.AsyncTask;
@@ -112,7 +114,10 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         runningTask = new LongOperation();
 
 
-        runningTask.execute();
+        if(session.getWhoami().equals("siswa"))
+        {
+            runningTask.execute();
+        }
 
     }
     public static AsyncTask<Void, Void, String> runningTask;
@@ -191,11 +196,14 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     private static void hideBtnAbsen(boolean status)
     {
         MaterialButton btn_absen = activity.findViewById(R.id.btn_absen);
+        TextView jangan_lupa_absen_hari_ini = activity.findViewById(R.id.jangan_lupa_absen_hari_ini);
         if(status)
         {
+            jangan_lupa_absen_hari_ini.setText("Selamat beraktivitas!");
             btn_absen.setVisibility(View.GONE);
         }else
         {
+            jangan_lupa_absen_hari_ini.setText("Jangan lupa\nabsen hari ini!");
             btn_absen.setVisibility(View.VISIBLE);
         }
         System.out.println("Status: " + status);
@@ -490,11 +498,25 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
     @Override
     public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
 
         if (dashboard_drawer.isDrawerOpen(GravityCompat.START)) {
             dashboard_drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            builder.setMessage("Apakah kamu yakin ingin keluar?");
+            builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    DashboardActivity.super.onBackPressed();
+                }
+            });
+            builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
         }
     }
 
