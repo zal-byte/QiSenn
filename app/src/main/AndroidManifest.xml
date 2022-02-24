@@ -18,14 +18,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QiSen"
         android:usesCleartextTraffic="true">
+        <activity android:name=".admin.TampilUser"></activity>
+        <activity android:name=".admin.UbahUser" />
         <activity
             android:name=".guru.CekDisini"
-            android:theme="@style/Theme.WithoutActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.WithoutActionBar" />
         <activity
             android:name=".guru.LaporanSiswa"
-            android:theme="@style/Theme.WithoutActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.WithoutActionBar" />
         <activity
             android:name=".siswa.LaporanSaya"
             android:exported="true" />
