@@ -10,10 +10,4 @@
         android:icon="@drawable/ic_search_black_24"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
 
-    <item
-        android:id="@+id/kembali"
-        android:icon="@drawable/ic_arrow_back_black_24"
-        android:title="Kembali"
-        app:showAsAction="always"
-        />
 </menu>

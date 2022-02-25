@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".KelasActivity">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/kelas_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/kelas_scrollview"
         android:layout_width="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -24,11 +35,11 @@
                 tools:listitem="@layout/list_kelas_layout" />
 
             <LinearLayout
+                android:id="@+id/no_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/no_data"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -38,12 +49,12 @@
                     android:src="@drawable/ic_school_warning_80" />
 
                 <TextView
+                    android:id="@+id/text_class_error"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/text_class_error"
-                    android:text="Error"
                     android:layout_gravity="center_horizontal"
-                    android:textSize="10pt"/>
+                    android:text="Error"
+                    android:textSize="10pt" />
 
             </LinearLayout>
 
@@ -52,4 +63,4 @@
     </androidx.core.widget.NestedScrollView>
 
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

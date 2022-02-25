@@ -53,6 +53,8 @@ public class KelasActivity extends AppCompatActivity {
     TextView text_class_error;
     LinearLayout no_data;
 
+    Toolbar kelas_toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +66,8 @@ public class KelasActivity extends AppCompatActivity {
         logic();
 
     }
-    private void classInit()
-    {
+
+    private void classInit() {
 
         userAction = new UserAction(this);
         session = new Session(this);
@@ -75,9 +77,8 @@ public class KelasActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId())
-        {
-            case R.id.kembali:
+        switch (item.getItemId()) {
+            case android.R.id.home:
                 KelasActivity.this.finish();
                 break;
             default:
@@ -86,43 +87,47 @@ public class KelasActivity extends AppCompatActivity {
         return true;
     }
 
-    private void viewInit()
-    {
+    private void viewInit() {
 
         recyclerView = (RecyclerView) findViewById(R.id.kelas_recyclerview);
         no_data = (LinearLayout) findViewById(R.id.no_data);
         text_class_error = findViewById(R.id.text_class_error);
+        kelas_toolbar = findViewById(R.id.kelas_toolbar);
+
+
+
+
 
 
     }
+
     private KelasAdapter adapter;
     private ArrayList<ModelKelas> arr = new ArrayList<>();
 
-    private void logic()
-    {
+    private void logic() {
 
+
+        setSupportActionBar(kelas_toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24);
         getSupportActionBar().setTitle(session.getKelas());
+        
 
         getMyClass();
 
     }
 
-    private void sparse(String result ) throws JSONException {
-        if( result.isEmpty() )
-        {
+    private void sparse(String result) throws JSONException {
+        if (result.isEmpty()) {
             Toast.makeText(KelasActivity.this, "no response", Toast.LENGTH_SHORT).show();
-        }else
-        {
+        } else {
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("myStudent");
 
-            if( jsonArray.length() > 0 )
-            {
-                for(int i = 0; i< jsonArray.length();i++)
-                {
+            if (jsonArray.length() > 0) {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject object = jsonArray.getJSONObject(i);
-                    if( object.getBoolean("res") != false )
-                    {
+                    if (object.getBoolean("res") != false) {
                         ModelKelas modelKelas = new ModelKelas();
                         modelKelas.setKelas(object.getString("kelas"));
                         modelKelas.setIdentifier(object.getString("nis"));
@@ -135,38 +140,33 @@ public class KelasActivity extends AppCompatActivity {
 
                         arr.add(modelKelas);
 
-                    }else
-                    {
+                    } else {
                         Snackbar.make(KelasActivity.this.getWindow().getDecorView().getRootView(), object.getString("msg"), Snackbar.LENGTH_SHORT).show();
                     }
                 }
 
-                if( arr.isEmpty() ){
+                if (arr.isEmpty()) {
                     no_data.setVisibility(View.VISIBLE);
                     text_class_error.setText("Siswa " + session.getKelas() + " Tidak ditemukan.");
-                }else
-                {
+                } else {
                     setData();
                 }
-            }else
-            {
+            } else {
                 Toast.makeText(KelasActivity.this, "no_data-", Toast.LENGTH_SHORT).show();
             }
         }
     }
-    private void setData()
-    {
-        adapter = new KelasAdapter( arr, this);
+
+    private void setData() {
+        adapter = new KelasAdapter(arr, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter);
-
 
 
     }
 
     @SuppressLint("StaticFieldLeak")
-    private void getMyClass()
-    {
+    private void getMyClass() {
         Toast.makeText(KelasActivity.this, session.getKelas(), Toast.LENGTH_SHORT).show();
         RequestQueue queue = Volley.newRequestQueue(KelasActivity.this);
 
@@ -174,7 +174,7 @@ public class KelasActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    sparse( response );
+                    sparse(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -189,28 +189,23 @@ public class KelasActivity extends AppCompatActivity {
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
 
         inflater.inflate(R.menu.kelas_option_menu, menu);
 
-        MenuItem kembali = menu.findItem(R.id.kembali);
+//        MenuItem kembali = menu.findItem(R.id.kembali);
         MenuItem searchItem = menu.findItem(R.id.kelas_search);
-
 
 
         SearchManager searchManager = (SearchManager) KelasActivity.this.getSystemService(Context.SEARCH_SERVICE);
 
         SearchView searchView = null;
-        if( searchItem != null )
-        {
-            searchView = (SearchView)  searchItem.getActionView();
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
         }
-        if( searchView != null )
-        {
+        if (searchView != null) {
 
             searchView.setSearchableInfo(searchManager.getSearchableInfo(KelasActivity.this.getComponentName()));
 
@@ -230,13 +225,11 @@ public class KelasActivity extends AppCompatActivity {
         });
         return true;
     }
-    private void filter(String text)
-    {
+
+    private void filter(String text) {
         ArrayList<ModelKelas> filteredList = new ArrayList<>();
-        for(ModelKelas item : arr)
-        {
-            if(item.getNama().toLowerCase().contains(text.toLowerCase()))
-            {
+        for (ModelKelas item : arr) {
+            if (item.getNama().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }

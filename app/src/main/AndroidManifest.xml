@@ -40,6 +40,7 @@
             android:theme="@style/Theme.WithoutActionBar" />
         <activity
             android:name=".KelasActivity"
+            android:theme="@style/Theme.WithoutActionBar"
             android:exported="true" />
         <activity
             android:name=".UserProfile"
