@@ -280,6 +280,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             btn_absen.setText("Foto disini!");
             jangan_lupa_absen_hari_ini.setText("Jangan lupa\nabsen hari ini!");
         } else if (session.getWhoami().equals("guru")) {
+            Toast.makeText(activity, "Testoooo", Toast.LENGTH_SHORT).show();
             btn_absen.setText("Cek disini!");
             btn_absen.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_checklist_24, 0, 0, 0);
             jangan_lupa_absen_hari_ini.setText("Cek Siswa hari ini!\n");
@@ -292,17 +293,17 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             siswa_laporan_saya = findViewById(R.id.siswa_laporan_saya);
             siswa_kelas = findViewById(R.id.siswa_kelas);
         } else if (include_guru.getVisibility() == View.VISIBLE) {
-            guru_laporan_siswa = findViewById(R.id.guru_laporan_siswa);
+//            guru_laporan_siswa = findViewById(R.id.guru_laporan_siswa);
             guru_kelas = findViewById(R.id.guru_kelas);
         } else if (include_admin.getVisibility() == View.VISIBLE) {
 
             admin_tambah_siswa = findViewById(R.id.admin_tambah_siswa);
             admin_edit_siswa = findViewById(R.id.admin_edit_siswa);
-            admin_hapus_siswa = findViewById(R.id.admin_hapus_siswa);
+//            admin_hapus_siswa = findViewById(R.id.admin_hapus_siswa);
 
             admin_tambah_guru = findViewById(R.id.admin_tambah_guru);
             admin_edit_guru = findViewById(R.id.admin_edit_guru);
-            admin_hapus_guru = findViewById(R.id.admin_hapus_guru);
+//            admin_hapus_guru = findViewById(R.id.admin_hapus_guru);
 
 
         }
@@ -354,9 +355,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             guru_kelas.setOnClickListener(View -> {
                 startActivity(new Intent(DashboardActivity.this, KelasActivity.class));
             });
-            guru_laporan_siswa.setOnClickListener(View -> {
-
-            });
+//            guru_laporan_siswa.setOnClickListener(View -> {
+//
+//            });
 
         } else if (include_admin.getVisibility() == View.VISIBLE) {
             admin_tambah_siswa.setOnClickListener(View -> {

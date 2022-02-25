@@ -299,6 +299,14 @@ public class TambahUser extends AppCompatActivity {
         agama.setText("");
         kelas.setText("");
         kata_sandi.setText("");
+
+        if(getIntent().getStringExtra("user").equals("siswa"))
+        {
+            param.put("request", "addSiswa");
+        }else if( getIntent().getStringExtra("user").equals("guru"))
+        {
+            param.put("request", "addGuru");
+        }
     }
 
 

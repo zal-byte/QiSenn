@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +49,8 @@ public class TampilUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tampil_user);
 
-
+        TampilUser.activity = TampilUser.this;
+        TampilUser.user = new UserAction(TampilUser.activity);
         classInit();
         init();
         logic();
@@ -61,6 +63,64 @@ public class TampilUser extends AppCompatActivity {
             return null;
         }
     }
+
+    static Activity activity;
+    static UserAction user;
+    static String name = "";
+    public static void removeUser(String identifier) {
+
+        if (TampilUser.activity.getIntent().getStringExtra("user").equals("siswa")) {
+            name = "deleteSiswa";
+        } else if (TampilUser.activity.getIntent().getStringExtra("user").equals("guru")) {
+            name = "deleteGuru";
+        }
+
+        StringRequest sr = new StringRequest(Request.Method.GET, user.api + "?request=" + name + "&identifier=" + identifier, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(TampilUser.activity, response, Toast.LENGTH_SHORT).show();
+                if( response.isEmpty())
+                {
+                    Toast.makeText(TampilUser.activity, "Tidak ada respon dari server", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray(TampilUser.name);
+                        if(jsonArray.length() > 0 )
+                        {
+                            for(int i = 0; i < jsonArray.length();i++)
+                            {
+                                JSONObject object = jsonArray.getJSONObject(i);
+                                if( object.getBoolean("res") != false )
+                                {
+                                    Toast.makeText(TampilUser.activity, object.getString("msg"), Toast.LENGTH_SHORT).show();
+                                    ((TampilUser) TampilUser.activity).getKelas();
+                                    ((TampilUser) TampilUser.activity).adapter.notifyDataSetChanged();
+                                }else
+                                {
+                                    Toast.makeText(TampilUser.activity, object.getString("msg"), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }else
+                        {
+                            Toast.makeText(TampilUser.activity, "Tidak ada data", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        RequestQueue queue = Volley.newRequestQueue(TampilUser.activity);
+        queue.add(sr);
+    }
+
 
     void classInit() {
         userAction = new UserAction(this);
@@ -77,7 +137,9 @@ public class TampilUser extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //getDataByKelas
                 data.clear();
-                adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
                 getUserByKelas(kelas_list.get(position));
             }
 
@@ -143,11 +205,9 @@ public class TampilUser extends AppCompatActivity {
 
     private void getUserByKelas(String kelas) {
         String param = "";
-        if(whoami().equals("siswa"))
-        {
+        if (whoami().equals("siswa")) {
             param = "?request=getSiswaByKelas&kelas=" + kelas;
-        }else if(whoami().equals("guru"))
-        {
+        } else if (whoami().equals("guru")) {
             param = "?request=getGuruByKelas&kelas=" + kelas;
         }
         StringRequest sr = new StringRequest(Request.Method.GET, userAction.api + param, new Response.Listener<String>() {
