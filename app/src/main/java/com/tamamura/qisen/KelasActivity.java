@@ -111,7 +111,7 @@ public class KelasActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_black_24);
         getSupportActionBar().setTitle(session.getKelas());
-        
+
 
         getMyClass();
 

@@ -66,6 +66,7 @@ public class LaporanSaya extends AppCompatActivity {
                     modelLaporan.setTanggal_absen(object.getString("tanggal_absen"));
 
 
+
                     modelLaporans.add(modelLaporan);
 
                 } else {
