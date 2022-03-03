@@ -12,6 +12,8 @@ public class LaporanSiswa extends AppCompatActivity {
 
     RecyclerView tampil_recyclerview;
     Spinner kelas_spinner;
+
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
