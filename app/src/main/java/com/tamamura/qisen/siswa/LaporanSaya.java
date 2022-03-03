@@ -64,7 +64,9 @@ public class LaporanSaya extends AppCompatActivity {
                     modelLaporan.setNis(object.getString("nis"));
                     modelLaporan.setStatus_absen(object.getString("status_absen"));
                     modelLaporan.setTanggal_absen(object.getString("tanggal_absen"));
-
+                    modelLaporan.setImg_date(object.getString("img_date"));
+                    modelLaporan.setImg_time(object.getString("img_time"));
+                    modelLaporan.setPath(object.getString("path"));
 
 
                     modelLaporans.add(modelLaporan);

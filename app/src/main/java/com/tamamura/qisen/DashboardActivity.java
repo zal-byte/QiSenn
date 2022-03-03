@@ -79,7 +79,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
     View include_siswa, include_guru, include_admin, dashboard_view_1;
     TextView jangan_lupa_absen_hari_ini;
 
-    CardView dashboard_cardview;
+    CardView dashboard_cardview, dashboard_cardview_2;
 
 
     //bunch of imagebutton
@@ -236,7 +236,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
         dashboard_navigation_view = findViewById(R.id.nav_view);
         dashboard_toolbar = findViewById(R.id.dashboard_toolbar);
         dashboard_cardview = findViewById(R.id.dashboard_cardview_1);
-
+        dashboard_cardview_2 = findViewById(R.id.dashboard_cardview_2);
         dashboard_view_1 = findViewById(R.id.dashboard_view_1);
 
 
@@ -271,21 +271,23 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             header_bg.setImageDrawable(getResources().getDrawable(R.drawable.checklist));
         } else if (session.getWhoami().equals("admin")) {
             include_admin.setVisibility(View.VISIBLE);
-            dashboard_cardview.setVisibility(View.GONE);
-            dashboard_view_1.setVisibility(View.GONE);
         }
 
 
         if (session.getWhoami().equals("siswa")) {
+            dashboard_cardview.setVisibility(View.VISIBLE);
             btn_absen.setText("Foto disini!");
             jangan_lupa_absen_hari_ini.setText("Jangan lupa\nabsen hari ini!");
         } else if (session.getWhoami().equals("guru")) {
-            Toast.makeText(activity, "Testoooo", Toast.LENGTH_SHORT).show();
+            dashboard_cardview.setVisibility(View.VISIBLE);
+
             btn_absen.setText("Cek disini!");
             btn_absen.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_checklist_24, 0, 0, 0);
             jangan_lupa_absen_hari_ini.setText("Cek Siswa hari ini!\n");
+        }else if ( session.getWhoami().equals("admin")){
+            dashboard_cardview.setVisibility(View.INVISIBLE);
+            dashboard_cardview_2.setVisibility(View.VISIBLE);
         }
-
 
         // Menu logic
 
@@ -385,8 +387,6 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
 
 
         }
-
-
     }
 
     ModelSiswa siswa = new ModelSiswa();

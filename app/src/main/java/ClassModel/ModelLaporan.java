@@ -7,6 +7,7 @@ public class ModelLaporan {
     String img_date;
     String img_time;
 
+
     public String getImg_date() {
         return img_date;
     }
