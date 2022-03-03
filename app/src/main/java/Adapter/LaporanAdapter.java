@@ -54,7 +54,6 @@ public class LaporanAdapter extends RecyclerView.Adapter<LaporanAdapter.MyViewHo
         Picasso.get().load(userAction.img_api + data.get(position).getPath()).into(holder.img_absen);
         holder.img_date.setText(data.get(position).getImg_date());
         holder.img_time.setText(data.get(position).getImg_time());
-        System.out.println(data.get(position).getPath());
 
     }
 

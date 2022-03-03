@@ -295,8 +295,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             siswa_laporan_saya = findViewById(R.id.siswa_laporan_saya);
             siswa_kelas = findViewById(R.id.siswa_kelas);
         } else if (include_guru.getVisibility() == View.VISIBLE) {
-//            guru_laporan_siswa = findViewById(R.id.guru_laporan_siswa);
+            guru_laporan_siswa = findViewById(R.id.guru_laporan_siswa);
             guru_kelas = findViewById(R.id.guru_kelas);
+
         } else if (include_admin.getVisibility() == View.VISIBLE) {
 
             admin_tambah_siswa = findViewById(R.id.admin_tambah_siswa);
@@ -357,9 +358,9 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
             guru_kelas.setOnClickListener(View -> {
                 startActivity(new Intent(DashboardActivity.this, KelasActivity.class));
             });
-//            guru_laporan_siswa.setOnClickListener(View -> {
-//
-//            });
+            guru_laporan_siswa.setOnClickListener(View -> {
+
+            });
 
         } else if (include_admin.getVisibility() == View.VISIBLE) {
             admin_tambah_siswa.setOnClickListener(View -> {

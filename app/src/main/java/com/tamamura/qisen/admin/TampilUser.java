@@ -235,6 +235,7 @@ public class TampilUser extends AppCompatActivity {
     @SuppressLint("StaticFieldLeak")
     private void sparseKelas(String result) throws JSONException {
         System.out.println("getkelas : " + result);
+        kelas_list.clear();
         if (result.isEmpty()) {
             Snackbar.make(getWindow().getDecorView().getRootView(), "Tidak ada respon dari server", Snackbar.LENGTH_SHORT).show();
         } else {

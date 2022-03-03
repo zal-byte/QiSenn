@@ -11,29 +11,29 @@
         android:columnCount="3"
         android:rowCount="1">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_column="0"-->
-<!--            android:orientation="vertical">-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:orientation="vertical">
 
-<!--            <ImageButton-->
-<!--                android:id="@+id/guru_laporan_siswa"-->
-<!--                android:layout_width="100dp"-->
-<!--                android:layout_height="100dp"-->
-<!--                android:background="@android:color/transparent"-->
-<!--                android:scaleType="fitXY"-->
-<!--                android:src="@drawable/guru_laporan_siswa" />-->
+            <ImageButton
+                android:id="@+id/guru_laporan_siswa"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/guru_laporan_siswa" />
 
-<!--            <TextView-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                android:gravity="center_horizontal"-->
-<!--                android:text="Laporan Siswa"-->
-<!--                android:textStyle="bold" />-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_horizontal"
+                android:text="Laporan Siswa"
+                android:textStyle="bold" />
 
-<!--        </LinearLayout>-->
+        </LinearLayout>
 
 
         <LinearLayout
