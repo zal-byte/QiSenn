@@ -6,12 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".admin.TampilUser">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:id="@+id/laporan_kelas_toolbar"
+            android:layout_height="?actionBarSize"/>
+    </com.google.android.material.appbar.AppBarLayout>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
+        android:layout_marginTop="?actionBarSize"
         app:cardUseCompatPadding="true"
         app:contentPadding="10dp">
 

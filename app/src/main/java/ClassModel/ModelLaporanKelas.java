@@ -1,0 +1,61 @@
+package ClassModel;
+
+public class ModelLaporanKelas {
+    String img_date, img_time, path, nis, tanggal_absen, jam_absen, status_absen;
+
+    public String getImg_date() {
+        return img_date;
+    }
+
+    public void setImg_date(String img_date) {
+        this.img_date = img_date;
+    }
+
+    public String getImg_time() {
+        return img_time;
+    }
+
+    public void setImg_time(String img_time) {
+        this.img_time = img_time;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getNis() {
+        return nis;
+    }
+
+    public void setNis(String nis) {
+        this.nis = nis;
+    }
+
+    public String getTanggal_absen() {
+        return tanggal_absen;
+    }
+
+    public void setTanggal_absen(String tanggal_absen) {
+        this.tanggal_absen = tanggal_absen;
+    }
+
+    public String getJam_absen() {
+        return jam_absen;
+    }
+
+    public void setJam_absen(String jam_absen) {
+        this.jam_absen = jam_absen;
+    }
+
+    public String getStatus_absen() {
+        return status_absen;
+    }
+
+    public void setStatus_absen(String status_absen) {
+        this.status_absen = status_absen;
+    }
+}

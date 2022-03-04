@@ -40,6 +40,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.tamamura.qisen.admin.TambahUser;
 import com.tamamura.qisen.admin.TampilUser;
 import com.tamamura.qisen.guru.CekDisini;
+import com.tamamura.qisen.guru.LaporanSiswa;
 import com.tamamura.qisen.siswa.LaporanSaya;
 
 import org.json.JSONArray;
@@ -359,7 +360,7 @@ public class DashboardActivity extends AppCompatActivity implements NavigationVi
                 startActivity(new Intent(DashboardActivity.this, KelasActivity.class));
             });
             guru_laporan_siswa.setOnClickListener(View -> {
-
+                startActivity(new Intent(DashboardActivity.this, LaporanSiswa.class));
             });
 
         } else if (include_admin.getVisibility() == View.VISIBLE) {
